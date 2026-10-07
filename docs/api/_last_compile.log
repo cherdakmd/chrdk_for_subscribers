@@ -1,0 +1,8 @@
+### вывод javac (хвост)
+11:/home/runner/work/chrdk_for_subscribers/chrdk_for_subscribers/src/main/java/ru/chrdk/pantheon/registry/PantheonContent.java:113: error: cannot find symbol
+14:  symbol:   variable WHITE_CARPET
+15:  location: class Blocks
+16:1 error
+27:  /home/runner/work/chrdk_for_subscribers/chrdk_for_subscribers/src/main/java/ru/chrdk/pantheon/registry/PantheonContent.java:113: error: cannot find symbol
+30:    symbol:   variable WHITE_CARPET
+31:    location: class Blocks
