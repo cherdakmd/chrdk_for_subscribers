@@ -1,0 +1,11 @@
+### net.minecraft.client.renderer.PlayerSkinRenderCache
+Compiled from "PlayerSkinRenderCache.java"
+public class net.minecraft.client.renderer.PlayerSkinRenderCache {
+  public static final net.minecraft.client.renderer.rendertype.RenderType DEFAULT_PLAYER_SKIN_RENDER_TYPE;
+  public static final java.time.Duration CACHE_DURATION;
+  public net.minecraft.client.renderer.PlayerSkinRenderCache(net.minecraft.client.renderer.texture.TextureManager, net.minecraft.client.resources.SkinManager, net.minecraft.server.players.ProfileResolver);
+  public net.minecraft.client.renderer.PlayerSkinRenderCache$RenderInfo getOrDefault(net.minecraft.world.item.component.ResolvableProfile);
+  public java.util.function.Supplier<net.minecraft.client.renderer.PlayerSkinRenderCache$RenderInfo> createLookup(net.minecraft.world.item.component.ResolvableProfile);
+  public java.util.concurrent.CompletableFuture<java.util.Optional<net.minecraft.client.renderer.PlayerSkinRenderCache$RenderInfo>> lookup(net.minecraft.world.item.component.ResolvableProfile);
+  static {};
+}
