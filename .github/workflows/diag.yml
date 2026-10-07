@@ -171,6 +171,15 @@ jobs:
             javap -cp "$MINECRAFT_CP" com.mojang.math.Axis 2>&1 || echo "FAILED (класс не найден)"
           } > docs/api/com_mojang_math_Axis.txt
           ls -la docs/api
+      - name: лог последней компиляции (первые ошибки)
+        run: |
+          ./gradlew compileJava compileClientJava --no-daemon --continue > /tmp/build.log 2>&1 || true
+          {
+            echo "### вывод javac (хвост)"
+            grep -nE "error:|cannot find symbol|symbol:|location:|required:|found:|^[0-9]+ error" /tmp/build.log | head -80
+          } > docs/api/_last_compile.log
+          cat docs/api/_last_compile.log
+
       - name: закоммитить дамп
         run: |
           git config user.name "chrdk-ci"

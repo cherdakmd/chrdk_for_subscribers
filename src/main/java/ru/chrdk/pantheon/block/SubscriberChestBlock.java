@@ -84,12 +84,12 @@ public class SubscriberChestBlock extends AtticShrineBlock {
 	}
 
 	@Override
-	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 		if (level.getBlockEntity(pos) instanceof SubscriberChestBlockEntity chest) {
 			chest.dropContents(level, pos);
 		}
 
-		super.playerWillDestroy(level, pos, state, player);
+		return super.playerWillDestroy(level, pos, state, player);
 	}
 
 	@Override
