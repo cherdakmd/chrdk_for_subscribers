@@ -6,6 +6,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -15,8 +16,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+import ru.chrdk.pantheon.data.Milestones;
 import ru.chrdk.pantheon.data.PantheonData;
 import ru.chrdk.pantheon.data.Subscriber;
+import ru.chrdk.pantheon.gameplay.AuraService;
+import ru.chrdk.pantheon.gameplay.AuraTier;
 import ru.chrdk.pantheon.util.Text;
 
 /**
@@ -49,6 +53,19 @@ public class AtticAltarBlock extends Block {
 							+ ", с " + Text.date(subscriber.addedAt())).withStyle(ChatFormatting.GRAY));
 				}
 			}
+
+			if (player instanceof ServerPlayer serverPlayer) {
+				AuraTier tier = AuraService.tierOf(serverPlayer);
+				int near = AuraService.countNear(serverLevel, data, serverPlayer);
+				player.sendSystemMessage(Component.literal("Рядом фигурок: " + near
+						+ (tier == null ? " · аура спит" : " · " + tier.title()
+								+ " (" + tier.effect().value().getDisplayName().getString() + ")"))
+						.withStyle(ChatFormatting.GRAY));
+			}
+
+			player.sendSystemMessage(Component.literal("Святилищ с именами: " + data.shrines().size()
+					+ " · даров принесено: " + data.totalOfferings()
+					+ " · " + Milestones.nextHint(data)).withStyle(ChatFormatting.GRAY));
 
 			level.playSound(null, pos, SoundEvents.ANVIL_HIT, SoundSource.BLOCKS, 0.5F, 1.4F);
 		}
