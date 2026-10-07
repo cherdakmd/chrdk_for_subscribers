@@ -32,7 +32,7 @@ public final class LedgerBook {
 		List<Subscriber> subscribers = data.all();
 		List<Filterable<Component>> pages = new ArrayList<>();
 
-		pages.add(Filterable.passThrough(mainPage(data, subscribers)));
+		pages.add(page(mainPage(data, subscribers)));
 
 		int perPageCapacity = (MAX_PAGES - 1) * ENTRIES_PER_PAGE;
 		int listed = Math.min(subscribers.size(), perPageCapacity);
@@ -49,12 +49,12 @@ public final class LedgerBook {
 				page.append(entry(subscribers.get(i), i + 1));
 			}
 
-			pages.add(Filterable.passThrough(clamp(page.toString())));
+			pages.add(page(Component.literal(clamp(page.toString()))));
 		}
 
 		if (subscribers.size() > listed) {
-			pages.add(Filterable.passThrough(clamp("…и ещё " + (subscribers.size() - listed)
-					+ " имён не влезли.\n\nПолный список: /attic list")));
+			pages.add(page(Component.literal(clamp("…и ещё " + (subscribers.size() - listed)
+					+ " имён не влезли.\n\nПолный список: /attic list"))));
 		}
 
 		ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
@@ -118,6 +118,11 @@ public final class LedgerBook {
 	/** Ник в книге не длиннее NAME_WIDTH символов — иначе строки ломаются. */
 	private static String name(String nick) {
 		return nick.length() <= NAME_WIDTH ? nick : nick.substring(0, NAME_WIDTH - 1) + "…";
+	}
+
+	/** Страница книги: Filterable в 26.3 принимает только компонент. */
+	private static Filterable<Component> page(Component page) {
+		return Filterable.passThrough(page);
 	}
 
 	private static String clamp(String page) {
