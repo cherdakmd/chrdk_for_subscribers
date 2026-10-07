@@ -81,7 +81,7 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
 		// Ноги модели лежат на 1.5 блока ниже начала координат (высота модели игрока),
 		// поэтому поднимаем фигурку так, чтобы ступни встали на крышку постамента (y = 1).
 		poseStack.translate(0.5D, 1.0D + 1.5D * scale, 0.5D);
-		poseStack.mulPose(Axis.YP.rotationDegrees(yawFor(state.facing)));
+		poseStack.rotateDegrees(Axis.YP, yawFor(state.facing));
 		poseStack.scale(scale, scale, scale);
 
 		submitNodeCollector.submitModel(
@@ -91,8 +91,7 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
 				state.texture,
 				state.lightCoords,
 				OverlayTexture.NO_OVERLAY,
-				0,
-				state.breakProgress);
+				0);
 
 		poseStack.popPose();
 	}
