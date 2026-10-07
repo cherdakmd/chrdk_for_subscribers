@@ -13,14 +13,14 @@ import net.minecraft.world.level.storage.ValueOutput;
 
 import ru.chrdk.pantheon.registry.PantheonContent;
 
-/** Данные постамента: чьё имя впечатано и какого размера фигурку ставить. */
-public class PedestalBlockEntity extends BlockEntity implements ShrineBlockEntity {
+/** Данные портретной рамы: чьё лицо в ней висит. */
+public class PortraitBlockEntity extends BlockEntity implements ShrineBlockEntity {
 	private static final Codec<String> NICK_CODEC = Codec.STRING;
 	private String subscriber = "";
 	private int tier = 1;
 
-	public PedestalBlockEntity(BlockPos pos, BlockState state) {
-		super(PantheonContent.PEDESTAL_ENTITY, pos, state);
+	public PortraitBlockEntity(BlockPos pos, BlockState state) {
+		super(PantheonContent.PORTRAIT_ENTITY, pos, state);
 	}
 
 	@Override

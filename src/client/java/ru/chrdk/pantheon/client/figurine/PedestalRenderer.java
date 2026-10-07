@@ -16,7 +16,7 @@ import net.minecraft.util.Unit;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-import ru.chrdk.pantheon.block.PedestalBlock;
+import ru.chrdk.pantheon.block.AtticShrineBlock;
 import ru.chrdk.pantheon.block.PedestalBlockEntity;
 
 /**
@@ -54,8 +54,8 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
 		state.tier = blockEntity.getTier();
 
 		BlockState blockState = blockEntity.getBlockState();
-		state.facing = blockState.hasProperty(PedestalBlock.FACING)
-				? blockState.getValue(PedestalBlock.FACING)
+		state.facing = blockState.hasProperty(AtticShrineBlock.FACING)
+				? blockState.getValue(AtticShrineBlock.FACING)
 				: Direction.NORTH;
 
 		if (state.nick.isEmpty()) {

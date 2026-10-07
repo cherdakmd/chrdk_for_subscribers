@@ -19,6 +19,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Prediction;
 import net.minecraft.world.item.ItemStack;
 
+import ru.chrdk.pantheon.data.LedgerBook;
 import ru.chrdk.pantheon.data.PantheonData;
 import ru.chrdk.pantheon.data.Subscriber;
 import ru.chrdk.pantheon.item.Seals;
@@ -64,6 +65,8 @@ public final class PantheonCommands {
 								.executes(context -> seal(context.getSource(), StringArgumentType.getString(context, "nick")))))
 				.then(literal("scroll")
 						.executes(context -> scroll(context.getSource())))
+				.then(literal("book")
+						.executes(context -> book(context.getSource())))
 				.then(literal("stats")
 						.executes(context -> stats(context.getSource())));
 	}
@@ -156,6 +159,15 @@ public final class PantheonCommands {
 		ServerPlayer player = source.getPlayerOrException();
 		player.getInventory().placeItemBackInInventory(new ItemStack(PantheonContent.NAME_SCROLL), Prediction.SERVER_ONLY);
 		source.sendSuccess(() -> Component.literal("Свиток Имён выдан.").withStyle(ChatFormatting.GOLD), false);
+		return 1;
+	}
+
+	private static int book(CommandSourceStack source) throws CommandSyntaxException {
+		ServerPlayer player = source.getPlayerOrException();
+		ItemStack book = LedgerBook.create(source.getLevel());
+		player.getInventory().placeItemBackInInventory(book, Prediction.SERVER_ONLY);
+		source.sendSuccess(() -> Component.literal("Книга Имён обновлена: вся летопись чердака у тебя в руке.")
+				.withStyle(ChatFormatting.GOLD), false);
 		return 1;
 	}
 
