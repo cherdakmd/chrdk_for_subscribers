@@ -1,0 +1,65 @@
+# Диагностика: снимает точные сигнатуры классов Minecraft 26.3 (javap) и коммитит их в docs/api.
+# Нужна, потому что среда без JDK не может посмотреть сигнатуры напрямую.
+
+name: diag
+
+on:
+  push:
+    paths-ignore:
+      - 'docs/api/**'
+
+permissions:
+  contents: write
+
+jobs:
+  dump:
+    if: "!contains(github.event.head_commit.message, '[api-dump]')"
+    runs-on: ubuntu-24.04
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v6
+      - name: setup jdk
+        uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+      - name: make gradle wrapper executable
+        run: chmod +x ./gradlew
+      - name: build (может упасть — нужен только скачанный Minecraft)
+        run: ./gradlew compileJava compileClientJava --no-daemon || true
+      - name: найти jar Minecraft
+        run: |
+          find ~/.gradle/caches -name "*.jar" -path "*fabric-loom*" | head -40
+          JAR=$(find ~/.gradle/caches -name "minecraft-merged-*.jar" | head -1)
+          if [ -z "$JAR" ]; then JAR=$(find ~/.gradle/caches -name "*.jar" -path "*minecraft*" | head -1); fi
+          echo "MINECRAFT_JAR=$JAR" >> "$GITHUB_ENV"
+      - name: снять сигнатуры
+        run: |
+          mkdir -p docs/api
+          for cls in \
+            net.minecraft.client.renderer.OrderedSubmitNodeCollector \
+            net.minecraft.client.renderer.SubmitNodeCollector \
+            net.minecraft.client.renderer.feature.ModelFeatureRenderer \
+            net.minecraft.client.renderer.blockentity.BlockEntityRenderer \
+            net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider \
+            net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState \
+            net.minecraft.client.renderer.state.level.CameraRenderState \
+            net.minecraft.client.renderer.rendertype.RenderTypes \
+            com.mojang.blaze3d.vertex.PoseStack \
+            com.mojang.math.Axis \
+            net.minecraft.client.renderer.PlayerSkinRenderCache \
+            net.minecraft.client.model.Model \
+            net.minecraft.client.model.geom.ModelPart \
+            net.minecraft.world.item.component.ResolvableProfile ; do
+            name=$(echo "$cls" | tr '.' '_')
+            echo "### $cls" >> "docs/api/$name.txt"
+            javap -cp "$MINECRAFT_JAR" "$cls" >> "docs/api/$name.txt" 2>&1 || echo "FAILED" >> "docs/api/$name.txt"
+          done
+          ls -la docs/api
+      - name: закоммитить дамп
+        run: |
+          git config user.name "chrdk-ci"
+          git config user.email "ci@users.noreply.github.com"
+          git add docs/api
+          git commit -m "ci: дамп сигнатур API 26.3 [api-dump]" || echo "нечего коммитить"
+          git push || echo "push не удался"
