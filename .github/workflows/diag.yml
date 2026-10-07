@@ -171,6 +171,12 @@ jobs:
             javap -cp "$MINECRAFT_CP" com.mojang.math.Axis 2>&1 || echo "FAILED (класс не найден)"
           } > docs/api/com_mojang_math_Axis.txt
           ls -la docs/api
+      - name: какие константы есть в Blocks (ищем ковёр/паутину/стекло/сундук)
+        run: |
+          javap -cp "$MINECRAFT_CP" net.minecraft.world.level.block.Blocks 2>/dev/null \
+            | grep -iE "CARPET|COBWEB|WEB|GLASS|CHEST" | head -60 > docs/api/_blocks_lookup.txt || true
+          cat docs/api/_blocks_lookup.txt
+
       - name: лог последней компиляции (первые ошибки)
         run: |
           ./gradlew compileJava compileClientJava --no-daemon --continue > /tmp/build.log 2>&1 || true
