@@ -1,7 +1,11 @@
 # Чердак Бессмертных
 
+[![build](https://github.com/cherdakmd/chrdk_for_subscribers/actions/workflows/build.yml/badge.svg)](https://github.com/cherdakmd/chrdk_for_subscribers/actions/workflows/build.yml)
+
 Мод для **Minecraft 26.3 (Fabric)**, который увековечивает подписчиков канала в мире выживания.
 Не мраморный храм олимпийцев, а пыльный чердак: постаменты, латунь, свечи, старая бумага — и имена.
+
+**Готовый jar:** [Releases → Последний релиз](https://github.com/cherdakmd/chrdk_for_subscribers/releases/latest) (`chrdk_pantheon-*.jar`).
 
 Концепт целиком: [DESIGN.md](DESIGN.md).
 
@@ -40,6 +44,14 @@
 
 Мод собирается **на GitHub Actions** — workflow [`.github/workflows/build.yml`](.github/workflows/build.yml)
 прогоняется на каждый push и кладёт `chrdk_pantheon-<версия>.jar` в артефакты (`build/libs/`).
+
+Как выпустить новый релиз: подними `version` в `gradle.properties`, затем
+
+```bash
+git tag -a v0.2.0 -m "Чердак Бессмертных v0.2.0" && git push origin v0.2.0
+```
+
+CI соберёт jar и сам создаст GitHub Release с заметками и приложенным модом.
 
 Локально (нужен JDK 25):
 
