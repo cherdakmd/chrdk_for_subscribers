@@ -47,6 +47,26 @@ jobs:
             done
           } > docs/api/_class_index.txt
           cat docs/api/_class_index.txt | head -60
+      - name: как ваниль назначает тип отрисовки (смотрим модели стекла и паутины)
+        run: |
+          {
+            echo "### assets/minecraft/models/block/cobweb.json"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/cobweb.json 2>/dev/null && break
+            done
+            echo
+            echo "### assets/minecraft/models/block/glass.json"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/glass.json 2>/dev/null && break
+            done
+            echo
+            echo "### assets/minecraft/models/block/cut_copper_stairs.json (образец обычной модели)"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/cut_copper_stairs.json 2>/dev/null && break
+            done
+          } > docs/api/_vanilla_models.txt
+          cat docs/api/_vanilla_models.txt
+
       - name: снять сигнатуры
         run: |
           rm -f docs/api/net_*.txt docs/api/com_*.txt
@@ -115,7 +135,10 @@ jobs:
             'net.minecraft.network.chat.ClickEvent$SuggestCommand' \
             net.minecraft.network.chat.HoverEvent \
             net.minecraft.network.chat.Style \
-            net.minecraft.core.NonNullList ; do
+            net.minecraft.core.NonNullList \
+            'net.minecraft.network.chat.HoverEvent$ShowText' \
+            net.minecraft.client.renderer.ItemBlockRenderTypes \
+            net.minecraft.client.renderer.block.model.BlockModel ; do
             name=$(echo "$cls" | tr '.' '_' | tr '$' '_')
             {
               echo "### $cls"
