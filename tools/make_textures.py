@@ -189,6 +189,117 @@ def parchment():
     return img
 
 
+def attic_chest_texture():
+    """Ларь подписчика: тёмные доски, латунные полосы и замок.
+    Разметка: y 0..4 — крышка, y 5..15 — корпус."""
+    rng = random.Random(0xC4E5)
+    img = new()
+    draw = ImageDraw.Draw(img)
+    wood = (86, 58, 36)
+    dark = shade(wood, 0.7)
+    fill_noise(img, wood, 9)
+
+    # вертикальные стыки досок (по всему корпусу)
+    for x in (5, 10):
+        draw.line((x, 0, x, 15), fill=dark)
+
+    # латунные полосы: на крышке и по низу корпуса
+    band = (178, 138, 62)
+    for y in (0, 1, 13, 14):
+        for x in range(16):
+            px(img, x, y, jitter(band, rng, 12))
+
+    # тень под крышкой
+    for x in range(16):
+        px(img, x, 4, shade(wood, 0.55))
+
+    # замок
+    plate = (196, 156, 74)
+    draw.rectangle((6, 7, 9, 12), fill=jitter(plate, rng, 10))
+    draw.rectangle((7, 9, 8, 11), fill=shade(plate, 0.45))
+    px(img, 7, 9, (250, 226, 150))
+    px(img, 8, 9, (250, 226, 150))
+
+    return img
+
+
+def attic_dust():
+    """Слой вековой пыли: серо-бежевые хлопья."""
+    rng = random.Random(0xD057)
+    img = new()
+    base = (168, 158, 138)
+    fill_noise(img, base, 10)
+
+    for _ in range(90):
+        x, y = rng.randrange(16), rng.randrange(16)
+        tone = rng.choice([(198, 190, 172), (140, 130, 112), (214, 208, 192)])
+        px(img, x, y, tone)
+
+    return img
+
+
+def attic_web_texture():
+    """Чердачная паутина: бледные нити по прозрачному фону (вырезной слой)."""
+    rng = random.Random(0xE8)
+    img = new()
+    thread = (222, 222, 214, 255)
+    shadow = (168, 170, 166, 255)
+    draw = ImageDraw.Draw(img)
+
+    # радиальные нити из угла и пара дуг
+    for target in ((15, 2), (15, 8), (15, 14), (9, 14), (2, 15), (0, 9), (0, 3), (5, 0)):
+        draw.line((0, 0, target[0], target[1]), fill=thread)
+
+    for radius in (5, 9, 13):
+        draw.arc((-radius, -radius, radius, radius), start=0, end=90, fill=shadow)
+        draw.arc((-radius + 1, -radius + 1, radius + 1, radius + 1), start=0, end=90, fill=thread)
+
+    # редкие подвески
+    for _ in range(12):
+        x, y = rng.randrange(16), rng.randrange(16)
+        px(img, x, y, thread)
+
+    return img
+
+
+def attic_glass_texture():
+    """Витраж с гербом канала: цветные стёкла в свинцовой оплётке."""
+    rng = random.Random(0x61A5)
+    img = new()
+    draw = ImageDraw.Draw(img)
+    palettes = [(86, 62, 132), (52, 96, 150), (168, 62, 62), (196, 154, 62), (62, 120, 88)]
+
+    cell = 5
+
+    for cy in range(0, 16, cell):
+        for cx in range(0, 16, cell):
+            color = palettes[rng.randrange(len(palettes))]
+            for y in range(cy, min(16, cy + cell - 1)):
+                for x in range(cx, min(16, cx + cell - 1)):
+                    px(img, x, y, (color[0], color[1], color[2], 190))
+
+    # свинцовая оплётка
+    for i in range(0, 16, cell):
+        draw.line((i, 0, i, 15), fill=(48, 46, 52, 255))
+        draw.line((0, i, 15, i), fill=(48, 46, 52, 255))
+
+    draw.rectangle((0, 0, 15, 15), outline=(48, 46, 52, 255))
+
+    # герб: латинская «C» под короной
+    emblem_dark = (40, 34, 30, 255)
+    for y in range(4, 13):
+        px(img, 5, y, emblem_dark)
+    for x in range(5, 12):
+        px(img, x, 4, emblem_dark)
+        px(img, x, 12, emblem_dark)
+    for x in range(6, 11):
+        px(img, x, 2, (250, 230, 160, 255))
+    px(img, 5, 3, (250, 230, 160, 255))
+    px(img, 10, 3, (250, 230, 160, 255))
+
+    return img
+
+
 def blank_seal():
     img = new()
     cx, cy, r = 7.5, 7.5, 6.2
@@ -575,6 +686,10 @@ def main():
         "flame.png": flame(),
         "tome.png": tome(),
         "parchment.png": parchment(),
+        "attic_chest.png": attic_chest_texture(),
+        "attic_dust.png": attic_dust(),
+        "attic_web.png": attic_web_texture(),
+        "attic_glass.png": attic_glass_texture(),
     }
     item_textures = {
         "blank_seal.png": blank_seal(),
