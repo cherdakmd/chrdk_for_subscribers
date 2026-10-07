@@ -223,8 +223,8 @@ public abstract class AtticShrineBlock extends BaseEntityBlock {
 		int number = PantheonData.get(serverLevel).addOffering(nick);
 		shrine.setOfferings(number);
 
-		level.playSound(null, pos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 1.2F);
-		level.sendParticles(ParticleTypes.SMOKE,
+		serverLevel.playSound(null, pos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 1.2F);
+		serverLevel.sendParticles(ParticleTypes.SMOKE,
 				pos.getX() + 0.5D, pos.getY() + 1.05D, pos.getZ() + 0.5D,
 				8, 0.2D, 0.15D, 0.2D, 0.01D);
 

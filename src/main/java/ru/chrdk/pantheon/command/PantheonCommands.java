@@ -280,15 +280,18 @@ public final class PantheonCommands {
 			}
 		}
 
-		if (!added.isEmpty()) {
+		final int skippedCount = skipped;
+		final List<String> imported = List.copyOf(added);
+
+		if (!imported.isEmpty()) {
 			Milestones.check(source.getLevel());
-			source.sendSuccess(() -> Component.literal("✦ Импорт: в летопись вписано " + added.size()
-					+ " имён, пропущено (уже были) " + skipped + ".").withStyle(ChatFormatting.GOLD), true);
+			source.sendSuccess(() -> Component.literal("✦ Импорт: в летопись вписано " + imported.size()
+					+ " имён, пропущено (уже были) " + skippedCount + ".").withStyle(ChatFormatting.GOLD), true);
 			source.sendSuccess(() -> Component.literal("Свежие имена: "
-					+ String.join(", ", added.subList(0, Math.min(8, added.size())))
-					+ (added.size() > 8 ? "…" : "")).withStyle(ChatFormatting.GRAY), false);
+					+ String.join(", ", imported.subList(0, Math.min(8, imported.size())))
+					+ (imported.size() > 8 ? "…" : "")).withStyle(ChatFormatting.GRAY), false);
 		} else {
-			source.sendSuccess(() -> Component.literal("Новых имён нет: все " + skipped + " уже на чердаке.")
+			source.sendSuccess(() -> Component.literal("Новых имён нет: все " + skippedCount + " уже на чердаке.")
 					.withStyle(ChatFormatting.YELLOW), false);
 		}
 
