@@ -54,7 +54,6 @@ public class NameScrollItem extends Item {
 			}
 
 			level.playSound(null, player.blockPosition(), SoundEvents.ANVIL_HIT, SoundSource.PLAYERS, 0.4F, 1.6F);
-			player.swing(hand, true);
 		}
 
 		return InteractionResult.SUCCESS;
