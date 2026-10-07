@@ -64,10 +64,12 @@ public class PortraitRenderer implements BlockEntityRenderer<PortraitBlockEntity
 		}
 
 		poseStack.pushPose();
-		// Голова модели висит в области y = -0.5..0 относительно начала координат,
-		// поэтому поднимаем её на середину блока и разворачиваем лицом из стены.
-		poseStack.translate(0.5D, 0.75D, 0.5D);
+		// Точка отсчёта модели головы — на уровне подбородка (череп растёт вверх от неё),
+		// поэтому ставим её так, чтобы затылок лёг на задник рамы, а лицо смотрело из проёма.
+		poseStack.translate(0.5D, 0.28D, 0.5D);
 		poseStack.rotateDegrees(Axis.YP, yawFor(state.facing));
+		// Чуть вглубь рамы: задник занимает дальнюю четверть блока.
+		poseStack.translate(0.0D, 0.0D, 0.03D);
 		poseStack.scale(HEAD_SCALE, HEAD_SCALE, HEAD_SCALE);
 
 		submitNodeCollector.submitModel(
