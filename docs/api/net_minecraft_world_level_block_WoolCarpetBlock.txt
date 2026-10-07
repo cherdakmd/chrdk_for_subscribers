@@ -1,0 +1,6 @@
+### net.minecraft.world.level.block.WoolCarpetBlock
+Compiled from "WoolCarpetBlock.java"
+public class net.minecraft.world.level.block.WoolCarpetBlock extends net.minecraft.world.level.block.CarpetBlock {
+  protected net.minecraft.world.level.block.WoolCarpetBlock(net.minecraft.world.item.DyeColor, net.minecraft.world.level.block.state.BlockBehaviour$Properties);
+  public net.minecraft.world.item.DyeColor getColor();
+}

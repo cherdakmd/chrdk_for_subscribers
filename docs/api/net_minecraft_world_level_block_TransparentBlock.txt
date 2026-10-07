@@ -1,0 +1,8 @@
+### net.minecraft.world.level.block.TransparentBlock
+Compiled from "TransparentBlock.java"
+public class net.minecraft.world.level.block.TransparentBlock extends net.minecraft.world.level.block.HalfTransparentBlock {
+  protected net.minecraft.world.level.block.TransparentBlock(net.minecraft.world.level.block.state.BlockBehaviour$Properties);
+  protected net.minecraft.world.phys.shapes.VoxelShape getVisualShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+  protected float getShadeBrightness(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  protected boolean propagatesSkylightDown(net.minecraft.world.level.block.state.BlockState);
+}

@@ -1,0 +1,40 @@
+### net.minecraft.network.chat.Style
+Compiled from "Style.java"
+public final class net.minecraft.network.chat.Style {
+  public static final net.minecraft.network.chat.Style EMPTY;
+  public static final int NO_SHADOW;
+  public net.minecraft.network.chat.TextColor getColor();
+  public java.lang.Integer getShadowColor();
+  public boolean isBold();
+  public boolean isItalic();
+  public boolean isStrikethrough();
+  public boolean isUnderlined();
+  public boolean isObfuscated();
+  public boolean isEmpty();
+  public net.minecraft.network.chat.ClickEvent getClickEvent();
+  public net.minecraft.network.chat.HoverEvent getHoverEvent();
+  public java.lang.String getInsertion();
+  public net.minecraft.network.chat.FontDescription getFont();
+  public net.minecraft.network.chat.Style withColor(net.minecraft.network.chat.TextColor);
+  public net.minecraft.network.chat.Style withColor(net.minecraft.ChatFormatting);
+  public net.minecraft.network.chat.Style withColor(int);
+  public net.minecraft.network.chat.Style withShadowColor(int);
+  public net.minecraft.network.chat.Style withoutShadow();
+  public net.minecraft.network.chat.Style withBold(java.lang.Boolean);
+  public net.minecraft.network.chat.Style withItalic(java.lang.Boolean);
+  public net.minecraft.network.chat.Style withUnderlined(java.lang.Boolean);
+  public net.minecraft.network.chat.Style withStrikethrough(java.lang.Boolean);
+  public net.minecraft.network.chat.Style withObfuscated(java.lang.Boolean);
+  public net.minecraft.network.chat.Style withClickEvent(net.minecraft.network.chat.ClickEvent);
+  public net.minecraft.network.chat.Style withHoverEvent(net.minecraft.network.chat.HoverEvent);
+  public net.minecraft.network.chat.Style withInsertion(java.lang.String);
+  public net.minecraft.network.chat.Style withFont(net.minecraft.network.chat.FontDescription);
+  public net.minecraft.network.chat.Style applyFormat(net.minecraft.ChatFormatting);
+  public net.minecraft.network.chat.Style applyLegacyFormat(net.minecraft.ChatFormatting);
+  public net.minecraft.network.chat.Style applyFormats(net.minecraft.ChatFormatting...);
+  public net.minecraft.network.chat.Style applyTo(net.minecraft.network.chat.Style);
+  public java.lang.String toString();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  static {};
+}
