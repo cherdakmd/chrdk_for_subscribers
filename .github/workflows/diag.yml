@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   dump:
-    if: "!contains(github.event.head_commit.message, '[api-dump]')"
+    if: "github.ref_type == 'branch' && !contains(github.event.head_commit.message, '[api-dump]')"
     runs-on: ubuntu-24.04
     steps:
       - name: checkout repository

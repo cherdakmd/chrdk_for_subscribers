@@ -137,6 +137,7 @@ public final class PantheonCommands {
 			return 0;
 		}
 
+		Milestones.check(source.getLevel());
 		source.sendSuccess(() -> Component.literal("✦ " + nick + " вписан в летопись.").withStyle(ChatFormatting.GOLD), true);
 		return 1;
 	}
