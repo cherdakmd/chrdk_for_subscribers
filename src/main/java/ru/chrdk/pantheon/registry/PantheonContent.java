@@ -76,7 +76,9 @@ public final class PantheonContent {
 	}
 
 	private static <T extends Block> T registerBlock(ResourceKey<Block> key, java.util.function.Function<BlockBehaviour.Properties, T> factory, Block copyFrom) {
-		BlockBehaviour.Properties properties = BlockBehaviour.Properties.ofFullCopy(copyFrom).setId(key);
+		// noOcclusion: модели алтаря и постамента чуть выходят за границы блока (свеча, статуэтка),
+		// поэтому блоку не стоит отсекать грани соседей.
+		BlockBehaviour.Properties properties = BlockBehaviour.Properties.ofFullCopy(copyFrom).noOcclusion().setId(key);
 		return Registry.register(BuiltInRegistries.BLOCK, key, factory.apply(properties));
 	}
 
