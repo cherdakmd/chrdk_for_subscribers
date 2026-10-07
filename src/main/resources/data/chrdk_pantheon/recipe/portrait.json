@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"PPP",
+		"PFP",
+		"PPP"
+	],
+	"key": {
+		"P": "minecraft:stick",
+		"F": "minecraft:item_frame"
+	},
+	"result": {
+		"id": "chrdk_pantheon:portrait",
+		"count": 1
+	}
+}

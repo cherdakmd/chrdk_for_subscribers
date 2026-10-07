@@ -1,0 +1,34 @@
+{
+	"variants": {
+		"facing=north,occupied=false": {
+			"model": "chrdk_pantheon:block/portrait"
+		},
+		"facing=east,occupied=false": {
+			"model": "chrdk_pantheon:block/portrait",
+			"y": 90
+		},
+		"facing=south,occupied=false": {
+			"model": "chrdk_pantheon:block/portrait",
+			"y": 180
+		},
+		"facing=west,occupied=false": {
+			"model": "chrdk_pantheon:block/portrait",
+			"y": 270
+		},
+		"facing=north,occupied=true": {
+			"model": "chrdk_pantheon:block/portrait"
+		},
+		"facing=east,occupied=true": {
+			"model": "chrdk_pantheon:block/portrait",
+			"y": 90
+		},
+		"facing=south,occupied=true": {
+			"model": "chrdk_pantheon:block/portrait",
+			"y": 180
+		},
+		"facing=west,occupied=true": {
+			"model": "chrdk_pantheon:block/portrait",
+			"y": 270
+		}
+	}
+}

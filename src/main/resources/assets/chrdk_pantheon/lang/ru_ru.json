@@ -2,6 +2,9 @@
 	"itemGroup.chrdk_pantheon.attic": "Чердак Бессмертных",
 	"block.chrdk_pantheon.attic_altar": "Чердачный алтарь",
 	"block.chrdk_pantheon.pedestal": "Постамент подписчика",
+	"block.chrdk_pantheon.portrait": "Портретная рама",
+	"block.chrdk_pantheon.obelisk": "Обелиск Имён",
+	"block.chrdk_pantheon.candelabra": "Чердачный канделябр",
 	"item.chrdk_pantheon.blank_seal": "Пустая печать",
 	"item.chrdk_pantheon.name_scroll": "Свиток Имён"
 }

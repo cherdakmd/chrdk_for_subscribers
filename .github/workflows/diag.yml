@@ -31,13 +31,25 @@ jobs:
         run: ./gradlew compileJava compileClientJava --no-daemon || true
       - name: найти jar Minecraft
         run: |
-          JAR=$(find ~/.gradle/caches -name "minecraft-merged-*.jar" | head -1)
-          if [ -z "$JAR" ]; then JAR=$(find ~/.gradle/caches -name "*.jar" -path "*minecraft*" | head -1); fi
-          echo "MINECRAFT_JAR=$JAR" >> "$GITHUB_ENV"
-          echo "нашёл: $JAR"
+          # Собираем classpath из всех jar'ов кэша, кроме sources/javadoc — так javap точно найдёт классы.
+          CP=$(find ~/.gradle/caches -name '*.jar' ! -name '*sources*' ! -name '*javadoc*' | tr '\n' ':')
+          echo "MINECRAFT_CP=$CP" >> "$GITHUB_ENV"
+          echo "jar'ов в classpath: $(echo "$CP" | tr ':' '\n' | grep -c jar)"
+          find ~/.gradle/caches -name "minecraft-merged*.jar" | head -5
+      - name: список книжных классов в jar
+        run: |
+          mkdir -p docs/api
+          {
+            echo "### классы, содержащие Book/Written/Filterable/ItemStack"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              echo "--- $jar"
+              unzip -l "$jar" | grep -oE "net/minecraft/[A-Za-z0-9_/$]*(Book|Written|Filterable|ItemStack|Lore)[A-Za-z0-9_$]*\.class" | sort -u | head -60
+            done
+          } > docs/api/_class_index.txt
+          cat docs/api/_class_index.txt | head -60
       - name: снять сигнатуры
         run: |
-          rm -rf docs/api && mkdir -p docs/api
+          rm -f docs/api/net_*.txt docs/api/com_*.txt
           for cls in \
             net.minecraft.client.renderer.OrderedSubmitNodeCollector \
             net.minecraft.client.renderer.feature.ModelFeatureRenderer \
@@ -70,19 +82,13 @@ jobs:
             name=$(echo "$cls" | tr '.' '_' | tr '$' '_')
             {
               echo "### $cls"
-              javap -cp "$MINECRAFT_JAR" "$cls" 2>&1 || echo "FAILED (класс не найден в этом jar)"
+              javap -cp "$MINECRAFT_CP" "$cls" 2>&1 || echo "FAILED (класс не найден)"
             } > "docs/api/$name.txt"
           done
           # com.mojang.math.Axis лежит не в самом minecraft.jar — ищем по всем jar'ам кэша
           {
-            echo "### com.mojang.math.Axis (поиск по всем jar)"
-            for jar in $(find ~/.gradle/caches -name "*.jar" | head -400); do
-              if javap -cp "$jar" com.mojang.math.Axis > /tmp/axis.txt 2>/dev/null; then
-                echo "found in: $jar"
-                cat /tmp/axis.txt
-                break
-              fi
-            done
+            echo "### com.mojang.math.Axis"
+            javap -cp "$MINECRAFT_CP" com.mojang.math.Axis 2>&1 || echo "FAILED (класс не найден)"
           } > docs/api/com_mojang_math_Axis.txt
           ls -la docs/api
       - name: закоммитить дамп

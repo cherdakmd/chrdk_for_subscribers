@@ -1,0 +1,129 @@
+{
+	"credit": "Чердак Бессмертных",
+	"texture_size": [16, 16],
+	"textures": {
+		"brass": "chrdk_pantheon:block/brass",
+		"candle": "chrdk_pantheon:block/attic_candle",
+		"flame": "chrdk_pantheon:block/flame",
+		"particle": "chrdk_pantheon:block/brass"
+	},
+	"elements": [
+		{
+			"name": "основание",
+			"from": [5, 0, 5],
+			"to": [11, 2, 11],
+			"faces": {
+				"up": {"texture": "#brass"},
+				"down": {"texture": "#brass"},
+				"north": {"texture": "#brass"},
+				"south": {"texture": "#brass"},
+				"west": {"texture": "#brass"},
+				"east": {"texture": "#brass"}
+			}
+		},
+		{
+			"name": "стойка",
+			"from": [7, 2, 7],
+			"to": [9, 9, 9],
+			"faces": {
+				"up": {"texture": "#brass"},
+				"down": {"texture": "#brass"},
+				"north": {"texture": "#brass"},
+				"south": {"texture": "#brass"},
+				"west": {"texture": "#brass"},
+				"east": {"texture": "#brass"}
+			}
+		},
+		{
+			"name": "перекладина",
+			"from": [2, 9, 6.5],
+			"to": [14, 10.5, 9.5],
+			"faces": {
+				"up": {"texture": "#brass"},
+				"down": {"texture": "#brass"},
+				"north": {"texture": "#brass"},
+				"south": {"texture": "#brass"},
+				"west": {"texture": "#brass"},
+				"east": {"texture": "#brass"}
+			}
+		},
+		{
+			"name": "свеча слева",
+			"from": [3, 10.5, 7],
+			"to": [5, 13.5, 9],
+			"faces": {
+				"up": {"texture": "#candle"},
+				"down": {"texture": "#candle"},
+				"north": {"texture": "#candle"},
+				"south": {"texture": "#candle"},
+				"west": {"texture": "#candle"},
+				"east": {"texture": "#candle"}
+			}
+		},
+		{
+			"name": "свеча справа",
+			"from": [11, 10.5, 7],
+			"to": [13, 13.5, 9],
+			"faces": {
+				"up": {"texture": "#candle"},
+				"down": {"texture": "#candle"},
+				"north": {"texture": "#candle"},
+				"south": {"texture": "#candle"},
+				"west": {"texture": "#candle"},
+				"east": {"texture": "#candle"}
+			}
+		},
+		{
+			"name": "свеча по центру",
+			"from": [6.5, 9, 6.5],
+			"to": [9.5, 13, 9.5],
+			"faces": {
+				"up": {"texture": "#candle"},
+				"down": {"texture": "#candle"},
+				"north": {"texture": "#candle"},
+				"south": {"texture": "#candle"},
+				"west": {"texture": "#candle"},
+				"east": {"texture": "#candle"}
+			}
+		},
+		{
+			"name": "огонёк слева",
+			"from": [3.5, 13.5, 7.5],
+			"to": [4.5, 15.5, 8.5],
+			"faces": {
+				"up": {"texture": "#flame"},
+				"down": {"texture": "#flame"},
+				"north": {"texture": "#flame"},
+				"south": {"texture": "#flame"},
+				"west": {"texture": "#flame"},
+				"east": {"texture": "#flame"}
+			}
+		},
+		{
+			"name": "огонёк справа",
+			"from": [11.5, 13.5, 7.5],
+			"to": [12.5, 15.5, 8.5],
+			"faces": {
+				"up": {"texture": "#flame"},
+				"down": {"texture": "#flame"},
+				"north": {"texture": "#flame"},
+				"south": {"texture": "#flame"},
+				"west": {"texture": "#flame"},
+				"east": {"texture": "#flame"}
+			}
+		},
+		{
+			"name": "огонёк по центру",
+			"from": [7.5, 13, 7.5],
+			"to": [8.5, 15, 8.5],
+			"faces": {
+				"up": {"texture": "#flame"},
+				"down": {"texture": "#flame"},
+				"north": {"texture": "#flame"},
+				"south": {"texture": "#flame"},
+				"west": {"texture": "#flame"},
+				"east": {"texture": "#flame"}
+			}
+		}
+	]
+}

@@ -2,6 +2,9 @@
 	"itemGroup.chrdk_pantheon.attic": "Attic of the Immortals",
 	"block.chrdk_pantheon.attic_altar": "Attic Altar",
 	"block.chrdk_pantheon.pedestal": "Subscriber Pedestal",
+	"block.chrdk_pantheon.portrait": "Portrait Frame",
+	"block.chrdk_pantheon.obelisk": "Obelisk of Names",
+	"block.chrdk_pantheon.candelabra": "Attic Candelabra",
 	"item.chrdk_pantheon.blank_seal": "Blank Seal",
 	"item.chrdk_pantheon.name_scroll": "Scroll of Names"
 }

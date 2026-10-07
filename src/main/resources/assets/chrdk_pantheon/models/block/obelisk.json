@@ -1,0 +1,90 @@
+{
+	"credit": "Чердак Бессмертных",
+	"texture_size": [16, 16],
+	"textures": {
+		"marble": "chrdk_pantheon:block/marble",
+		"brass": "chrdk_pantheon:block/brass",
+		"names": "chrdk_pantheon:block/parchment",
+		"particle": "chrdk_pantheon:block/marble"
+	},
+	"elements": [
+		{
+			"name": "основание",
+			"from": [0, 0, 0],
+			"to": [16, 3, 16],
+			"faces": {
+				"up": {"texture": "#marble"},
+				"down": {"texture": "#marble"},
+				"north": {"texture": "#marble"},
+				"south": {"texture": "#marble"},
+				"west": {"texture": "#marble"},
+				"east": {"texture": "#marble"}
+			}
+		},
+		{
+			"name": "нижняя часть столпа",
+			"from": [3, 3, 3],
+			"to": [13, 9, 13],
+			"faces": {
+				"up": {"texture": "#marble"},
+				"down": {"texture": "#marble"},
+				"north": {"texture": "#marble"},
+				"south": {"texture": "#marble"},
+				"west": {"texture": "#marble"},
+				"east": {"texture": "#marble"}
+			}
+		},
+		{
+			"name": "верхняя часть столпа",
+			"from": [4, 9, 4],
+			"to": [12, 14, 12],
+			"faces": {
+				"up": {"texture": "#marble"},
+				"down": {"texture": "#marble"},
+				"north": {"texture": "#marble"},
+				"south": {"texture": "#marble"},
+				"west": {"texture": "#marble"},
+				"east": {"texture": "#marble"}
+			}
+		},
+		{
+			"name": "латунный навершник",
+			"from": [3, 14, 3],
+			"to": [13, 16, 13],
+			"faces": {
+				"up": {"texture": "#brass"},
+				"down": {"texture": "#brass"},
+				"north": {"texture": "#brass"},
+				"south": {"texture": "#brass"},
+				"west": {"texture": "#brass"},
+				"east": {"texture": "#brass"}
+			}
+		},
+		{
+			"name": "список имён",
+			"from": [5, 4, 2.6],
+			"to": [11, 8.5, 3],
+			"faces": {
+				"up": {"texture": "#names"},
+				"down": {"texture": "#names"},
+				"north": {"texture": "#names"},
+				"south": {"texture": "#names"},
+				"west": {"texture": "#names"},
+				"east": {"texture": "#names"}
+			}
+		},
+		{
+			"name": "список имён сзади",
+			"from": [5, 4, 13],
+			"to": [11, 8.5, 13.4],
+			"faces": {
+				"up": {"texture": "#names"},
+				"down": {"texture": "#names"},
+				"north": {"texture": "#names"},
+				"south": {"texture": "#names"},
+				"west": {"texture": "#names"},
+				"east": {"texture": "#names"}
+			}
+		}
+	]
+}

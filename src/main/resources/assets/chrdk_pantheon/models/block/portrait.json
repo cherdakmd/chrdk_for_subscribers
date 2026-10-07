@@ -1,0 +1,90 @@
+{
+	"credit": "Чердак Бессмертных",
+	"texture_size": [16, 16],
+	"textures": {
+		"wood": "chrdk_pantheon:block/attic_wood",
+		"back": "chrdk_pantheon:block/parchment",
+		"brass": "chrdk_pantheon:block/brass",
+		"particle": "chrdk_pantheon:block/attic_wood"
+	},
+	"elements": [
+		{
+			"name": "левая стойка",
+			"from": [0, 0, 8],
+			"to": [2, 16, 15],
+			"faces": {
+				"up": {"texture": "#wood"},
+				"down": {"texture": "#wood"},
+				"north": {"texture": "#wood"},
+				"south": {"texture": "#wood"},
+				"west": {"texture": "#wood"},
+				"east": {"texture": "#wood"}
+			}
+		},
+		{
+			"name": "правая стойка",
+			"from": [14, 0, 8],
+			"to": [16, 16, 15],
+			"faces": {
+				"up": {"texture": "#wood"},
+				"down": {"texture": "#wood"},
+				"north": {"texture": "#wood"},
+				"south": {"texture": "#wood"},
+				"west": {"texture": "#wood"},
+				"east": {"texture": "#wood"}
+			}
+		},
+		{
+			"name": "нижняя перекладина",
+			"from": [2, 0, 8],
+			"to": [14, 2, 15],
+			"faces": {
+				"up": {"texture": "#wood"},
+				"down": {"texture": "#wood"},
+				"north": {"texture": "#wood"},
+				"south": {"texture": "#wood"},
+				"west": {"texture": "#wood"},
+				"east": {"texture": "#wood"}
+			}
+		},
+		{
+			"name": "верхняя перекладина",
+			"from": [2, 14, 8],
+			"to": [14, 16, 15],
+			"faces": {
+				"up": {"texture": "#wood"},
+				"down": {"texture": "#wood"},
+				"north": {"texture": "#wood"},
+				"south": {"texture": "#wood"},
+				"west": {"texture": "#wood"},
+				"east": {"texture": "#wood"}
+			}
+		},
+		{
+			"name": "задник",
+			"from": [2, 2, 12],
+			"to": [14, 14, 15],
+			"faces": {
+				"up": {"texture": "#back"},
+				"down": {"texture": "#back"},
+				"north": {"texture": "#back"},
+				"south": {"texture": "#back"},
+				"west": {"texture": "#back"},
+				"east": {"texture": "#back"}
+			}
+		},
+		{
+			"name": "латунная табличка",
+			"from": [5, 2.2, 7],
+			"to": [11, 3.6, 8],
+			"faces": {
+				"up": {"texture": "#brass"},
+				"down": {"texture": "#brass"},
+				"north": {"texture": "#brass"},
+				"south": {"texture": "#brass"},
+				"west": {"texture": "#brass"},
+				"east": {"texture": "#brass"}
+			}
+		}
+	]
+}
