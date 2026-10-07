@@ -1,3 +1,13 @@
 ### net.minecraft.world.entity.player.PlayerModelType
-Error: class not found: net.minecraft.world.entity.player.PlayerModelType
-FAILED (класс не найден в этом jar)
+Compiled from "PlayerModelType.java"
+public final class net.minecraft.world.entity.player.PlayerModelType extends java.lang.Enum<net.minecraft.world.entity.player.PlayerModelType> implements net.minecraft.util.StringRepresentable {
+  public static final net.minecraft.world.entity.player.PlayerModelType SLIM;
+  public static final net.minecraft.world.entity.player.PlayerModelType WIDE;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.entity.player.PlayerModelType> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.entity.player.PlayerModelType> STREAM_CODEC;
+  public static net.minecraft.world.entity.player.PlayerModelType[] values();
+  public static net.minecraft.world.entity.player.PlayerModelType valueOf(java.lang.String);
+  public static net.minecraft.world.entity.player.PlayerModelType byLegacyServicesName(java.lang.String);
+  public java.lang.String getSerializedName();
+  static {};
+}

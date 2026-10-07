@@ -1,5 +1,4 @@
-### com.mojang.math.Axis (поиск по всем jar)
-found in: /home/runner/.gradle/caches/fabric-loom/26.3/minecraft-extracted_server.jar
+### com.mojang.math.Axis
 Compiled from "Axis.java"
 public interface com.mojang.math.Axis {
   public static final com.mojang.math.Axis XN;
