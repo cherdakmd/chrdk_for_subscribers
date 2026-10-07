@@ -1,0 +1,26 @@
+### assets/minecraft/models/block/cobweb.json
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "minecraft:block/cobweb"
+  }
+}
+### assets/minecraft/models/block/glass.json
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": {
+      "force_translucent": true,
+      "sprite": "minecraft:block/glass"
+    }
+  }
+}
+### assets/minecraft/models/block/cut_copper_stairs.json (образец обычной модели)
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "minecraft:block/cut_copper",
+    "side": "minecraft:block/cut_copper",
+    "top": "minecraft:block/cut_copper"
+  }
+}
