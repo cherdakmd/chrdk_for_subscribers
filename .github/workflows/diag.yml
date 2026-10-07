@@ -64,6 +64,21 @@ jobs:
             for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
               unzip -p "$jar" assets/minecraft/models/block/cut_copper_stairs.json 2>/dev/null && break
             done
+            echo
+            echo "### assets/minecraft/models/block/white_carpet.json"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/white_carpet.json 2>/dev/null && break
+            done
+            echo
+            echo "### assets/minecraft/models/block/carpet.json"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/carpet.json 2>/dev/null && break
+            done
+            echo
+            echo "### assets/minecraft/models/block/chest.json"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/chest.json 2>/dev/null && break
+            done
           } > docs/api/_vanilla_models.txt
           cat docs/api/_vanilla_models.txt
 
@@ -138,7 +153,12 @@ jobs:
             net.minecraft.core.NonNullList \
             'net.minecraft.network.chat.HoverEvent$ShowText' \
             net.minecraft.client.renderer.ItemBlockRenderTypes \
-            net.minecraft.client.renderer.block.model.BlockModel ; do
+            net.minecraft.client.renderer.block.model.BlockModel \
+            'net.minecraft.world.level.storage.ValueInput$TypedInputList' \
+            'net.minecraft.world.level.storage.ValueOutput$TypedOutputList' \
+            net.minecraft.world.ContainerHelper \
+            net.minecraft.world.level.block.entity.ChestBlockEntity \
+            net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity ; do
             name=$(echo "$cls" | tr '.' '_' | tr '$' '_')
             {
               echo "### $cls"
