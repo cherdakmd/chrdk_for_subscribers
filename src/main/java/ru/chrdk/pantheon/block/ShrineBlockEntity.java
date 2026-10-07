@@ -9,4 +9,14 @@ public interface ShrineBlockEntity {
 	int getTier();
 
 	void setSubscriber(String subscriber, int tier);
+
+	/** Когда последний раз принимали дар (игровое время) — жёсткий кулдаун подношений. */
+	long getOfferedAt();
+
+	void setOfferedAt(long gameTime);
+
+	/** Сколько даров подписчику уже принесли. */
+	int getOfferings();
+
+	void setOfferings(int offerings);
 }

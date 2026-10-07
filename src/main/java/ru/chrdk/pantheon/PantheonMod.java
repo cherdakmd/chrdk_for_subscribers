@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ru.chrdk.pantheon.command.PantheonCommands;
+import ru.chrdk.pantheon.gameplay.AuraService;
 import ru.chrdk.pantheon.registry.PantheonContent;
 
 /**
@@ -24,6 +25,7 @@ public class PantheonMod implements ModInitializer {
 	public void onInitialize() {
 		PantheonContent.register();
 		PantheonCommands.register();
+		AuraService.register();
 
 		LOGGER.info("[{}] Чердак открыт, полки ждут подписчиков.", MOD_NAME);
 	}

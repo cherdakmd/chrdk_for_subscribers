@@ -57,6 +57,12 @@ public final class LedgerBook {
 					+ " имён не влезли.\n\nПолный список: /attic list"))));
 		}
 
+		Component honours = honoursPage(data);
+
+		if (honours != null) {
+			pages.add(page(honours));
+		}
+
 		ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
 		book.set(DataComponents.WRITTEN_BOOK_CONTENT, new WrittenBookContent(
 				Filterable.passThrough("Книга Имён"),
@@ -80,6 +86,10 @@ public final class LedgerBook {
 			return Component.literal(page.toString());
 		}
 
+		if (data.totalOfferings() > 0) {
+			page.append("\nДаров принесено: ").append(data.totalOfferings());
+		}
+
 		page.append("\n\n── Первые на чердаке ──\n");
 
 		for (int i = 0; i < Math.min(3, subscribers.size()); i++) {
@@ -99,6 +109,42 @@ public final class LedgerBook {
 		return Component.literal(clamp(page.toString()));
 	}
 
+	/** Последняя страница: вехи чердака и самые обласканные подписчики. */
+	private static Component honoursPage(PantheonData data) {
+		if (data.milestones().isEmpty() && data.totalOfferings() == 0) {
+			return null;
+		}
+
+		StringBuilder page = new StringBuilder("── Вехи чердака ──\n");
+
+		if (data.milestones().isEmpty()) {
+			page.append("пока ни одной\n");
+		} else {
+			for (Milestone milestone : data.milestones()) {
+				page.append(milestone.count()).append(" имён — ").append(Text.date(milestone.at())).append('\n');
+			}
+		}
+
+		StringBuilder ladder = new StringBuilder("\nДальше: ");
+		ladder.append(Milestones.nextHint(data));
+		page.append(ladder);
+
+		if (data.totalOfferings() > 0) {
+			page.append("\n\n── Обласканные дарами ──\n");
+
+			for (Subscriber subscriber : data.mostHonoured(5)) {
+				if (subscriber.offerings() == 0) {
+					break;
+				}
+
+				page.append(name(subscriber.name())).append(" — ").append(subscriber.offerings())
+						.append(subscriber.offerings() == 1 ? " дар" : " дара").append('\n');
+			}
+		}
+
+		return Component.literal(clamp(page.toString()));
+	}
+
 	/** Одна строка летописи: номер, ник, тир и пометка «потух». */
 	private static String entry(Subscriber subscriber, int number) {
 		StringBuilder line = new StringBuilder();
@@ -106,6 +152,10 @@ public final class LedgerBook {
 
 		if (subscriber.tier() > 1) {
 			line.append(" т").append(subscriber.tier());
+		}
+
+		if (subscriber.offerings() > 0) {
+			line.append(" ✦").append(subscriber.offerings());
 		}
 
 		if (!subscriber.active()) {
