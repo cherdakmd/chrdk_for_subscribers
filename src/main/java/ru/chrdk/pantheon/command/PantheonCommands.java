@@ -1,0 +1,170 @@
+package ru.chrdk.pantheon.command;
+
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.literal;
+
+import java.util.List;
+
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Prediction;
+import net.minecraft.world.item.ItemStack;
+
+import ru.chrdk.pantheon.data.PantheonData;
+import ru.chrdk.pantheon.data.Subscriber;
+import ru.chrdk.pantheon.item.Seals;
+import ru.chrdk.pantheon.registry.PantheonContent;
+import ru.chrdk.pantheon.util.Text;
+
+/**
+ * Команды мода: /attic (он же /чердак).
+ */
+public final class PantheonCommands {
+	private static final int PAGE_SIZE = 10;
+
+	private PantheonCommands() {
+	}
+
+	public static void register() {
+		CommandRegistrationCallback.EVENT.register((dispatcher, buildContext, selection) -> {
+			dispatcher.register(build("attic"));
+			dispatcher.register(build("чердак"));
+		});
+	}
+
+	private static LiteralArgumentBuilder<CommandSourceStack> build(String name) {
+		return literal(name)
+				.then(literal("list")
+						.executes(context -> list(context.getSource(), 1))
+						.then(argument("page", IntegerArgumentType.integer(1))
+								.executes(context -> list(context.getSource(), IntegerArgumentType.getInteger(context, "page")))))
+				.then(literal("add")
+						.then(argument("nick", StringArgumentType.greedyString())
+								.executes(context -> add(context.getSource(), StringArgumentType.getString(context, "nick")))))
+				.then(literal("remove")
+						.then(argument("nick", StringArgumentType.greedyString())
+								.executes(context -> remove(context.getSource(), StringArgumentType.getString(context, "nick")))))
+				.then(literal("tier")
+						.then(argument("nick", StringArgumentType.string())
+								.then(argument("tier", IntegerArgumentType.integer(1, 5))
+										.executes(context -> tier(context.getSource(),
+												StringArgumentType.getString(context, "nick"),
+												IntegerArgumentType.getInteger(context, "tier"))))))
+				.then(literal("seal")
+						.then(argument("nick", StringArgumentType.greedyString())
+								.executes(context -> seal(context.getSource(), StringArgumentType.getString(context, "nick")))))
+				.then(literal("scroll")
+						.executes(context -> scroll(context.getSource())))
+				.then(literal("stats")
+						.executes(context -> stats(context.getSource())));
+	}
+
+	private static int list(CommandSourceStack source, int page) {
+		PantheonData data = PantheonData.get(source.getLevel());
+		List<Subscriber> subscribers = data.all();
+
+		if (subscribers.isEmpty()) {
+			source.sendSuccess(() -> Component.literal("Чердак пуст: ни одного имени.").withStyle(ChatFormatting.GRAY), false);
+			return 0;
+		}
+
+		int pages = (subscribers.size() + PAGE_SIZE - 1) / PAGE_SIZE;
+		int current = Math.min(Math.max(page, 1), pages);
+		int from = (current - 1) * PAGE_SIZE;
+		int to = Math.min(from + PAGE_SIZE, subscribers.size());
+
+		source.sendSuccess(() -> Component.literal("── Летопись чердака · стр. " + current + "/" + pages
+				+ " · всего " + subscribers.size() + " ──").withStyle(ChatFormatting.GOLD), false);
+
+		for (int i = from; i < to; i++) {
+			final int number = i + 1;
+			final Subscriber subscriber = subscribers.get(i);
+			source.sendSuccess(() -> Component.literal("#" + number + " " + subscriber.name()
+					+ " · тир " + subscriber.tier()
+					+ " · " + Text.date(subscriber.addedAt())
+					+ (subscriber.active() ? "" : " · потух")).withStyle(ChatFormatting.GRAY), false);
+		}
+
+		return to - from;
+	}
+
+	private static int add(CommandSourceStack source, String rawNick) {
+		String nick = rawNick.trim();
+
+		if (nick.isEmpty()) {
+			source.sendFailure(Component.literal("Ник не может быть пустым."));
+			return 0;
+		}
+
+		PantheonData data = PantheonData.get(source.getLevel());
+
+		if (!data.add(nick, "ручная запись", 1)) {
+			source.sendSuccess(() -> Component.literal(nick + " уже на чердаке.").withStyle(ChatFormatting.YELLOW), false);
+			return 0;
+		}
+
+		source.sendSuccess(() -> Component.literal("✦ " + nick + " вписан в летопись.").withStyle(ChatFormatting.GOLD), true);
+		return 1;
+	}
+
+	private static int remove(CommandSourceStack source, String rawNick) {
+		String nick = rawNick.trim();
+		PantheonData data = PantheonData.get(source.getLevel());
+
+		if (!data.remove(nick)) {
+			source.sendFailure(Component.literal("В летописи нет имени " + nick + "."));
+			return 0;
+		}
+
+		source.sendSuccess(() -> Component.literal(nick + " вычеркнут из летописи.").withStyle(ChatFormatting.GRAY), true);
+		return 1;
+	}
+
+	private static int tier(CommandSourceStack source, String rawNick, int tier) {
+		String nick = rawNick.trim();
+		PantheonData data = PantheonData.get(source.getLevel());
+
+		if (!data.setTier(nick, tier)) {
+			source.sendFailure(Component.literal("В летописи нет имени " + nick + "."));
+			return 0;
+		}
+
+		source.sendSuccess(() -> Component.literal("Тир " + nick + " → " + tier + ".").withStyle(ChatFormatting.YELLOW), false);
+		return 1;
+	}
+
+	private static int seal(CommandSourceStack source, String rawNick) throws CommandSyntaxException {
+		String nick = rawNick.trim();
+		ServerPlayer player = source.getPlayerOrException();
+		ItemStack seal = Seals.named(nick);
+		player.getInventory().placeItemBackInInventory(seal, Prediction.SERVER_ONLY);
+		source.sendSuccess(() -> Component.literal("Печать с именем " + nick + " у тебя в руках. Щёлкни ею по постаменту.")
+				.withStyle(ChatFormatting.GOLD), false);
+		return 1;
+	}
+
+	private static int scroll(CommandSourceStack source) throws CommandSyntaxException {
+		ServerPlayer player = source.getPlayerOrException();
+		player.getInventory().placeItemBackInInventory(new ItemStack(PantheonContent.NAME_SCROLL), Prediction.SERVER_ONLY);
+		source.sendSuccess(() -> Component.literal("Свиток Имён выдан.").withStyle(ChatFormatting.GOLD), false);
+		return 1;
+	}
+
+	private static int stats(CommandSourceStack source) {
+		PantheonData data = PantheonData.get(source.getLevel());
+		source.sendSuccess(() -> Component.literal("── Чердак Бессмертных ──").withStyle(ChatFormatting.GOLD), false);
+		source.sendSuccess(() -> Component.literal("Подписчиков: " + data.size()
+				+ " · в строю: " + data.activeCount()
+				+ " · потухло: " + (data.size() - data.activeCount())).withStyle(ChatFormatting.YELLOW), false);
+		return data.size();
+	}
+}

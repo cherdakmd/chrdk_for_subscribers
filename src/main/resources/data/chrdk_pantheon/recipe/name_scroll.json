@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		"minecraft:paper",
+		"minecraft:paper",
+		"minecraft:ink_sac",
+		"minecraft:gold_nugget"
+	],
+	"result": {
+		"id": "chrdk_pantheon:name_scroll",
+		"count": 1
+	}
+}

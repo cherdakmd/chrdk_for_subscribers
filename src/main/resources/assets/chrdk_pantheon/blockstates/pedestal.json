@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"occupied=false": {
+			"model": "chrdk_pantheon:block/pedestal"
+		},
+		"occupied=true": {
+			"model": "chrdk_pantheon:block/pedestal_occupied"
+		}
+	}
+}
