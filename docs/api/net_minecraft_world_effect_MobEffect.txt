@@ -1,0 +1,36 @@
+### net.minecraft.world.effect.MobEffect
+Compiled from "MobEffect.java"
+public class net.minecraft.world.effect.MobEffect implements net.minecraft.world.flag.FeatureElement {
+  public static final com.mojang.serialization.Codec<net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>> STREAM_CODEC;
+  protected net.minecraft.world.effect.MobEffect(net.minecraft.world.effect.MobEffectCategory, int);
+  protected net.minecraft.world.effect.MobEffect(net.minecraft.world.effect.MobEffectCategory, int, net.minecraft.core.particles.ParticleOptions);
+  public int getBlendInDurationTicks();
+  public int getBlendOutDurationTicks();
+  public int getBlendOutAdvanceTicks();
+  public boolean applyEffectTick(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, int);
+  public void applyInstantaneousEffect(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.Entity, net.minecraft.world.entity.Entity, net.minecraft.world.entity.LivingEntity, int, double);
+  public boolean shouldApplyEffectTickThisTick(int, int);
+  public void onEffectStarted(net.minecraft.world.entity.LivingEntity, int);
+  public void onEffectAdded(net.minecraft.world.entity.LivingEntity, int);
+  public void onMobRemoved(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, int, net.minecraft.world.entity.Entity$RemovalReason);
+  public void onMobHurt(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, int, net.minecraft.world.damagesource.DamageSource, float);
+  public boolean isInstantaneous();
+  protected java.lang.String getOrCreateDescriptionId();
+  public java.lang.String getDescriptionId();
+  public net.minecraft.network.chat.Component getDisplayName();
+  public net.minecraft.world.effect.MobEffectCategory getCategory();
+  public int getColor();
+  public net.minecraft.world.effect.MobEffect addAttributeModifier(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, net.minecraft.resources.Identifier, double, net.minecraft.world.entity.ai.attributes.AttributeModifier$Operation);
+  public net.minecraft.world.effect.MobEffect setBlendDuration(int);
+  public net.minecraft.world.effect.MobEffect setBlendDuration(int, int, int);
+  public void createModifiers(int, java.util.function.BiConsumer<net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute>, net.minecraft.world.entity.ai.attributes.AttributeModifier>);
+  public void removeAttributeModifiers(net.minecraft.world.entity.ai.attributes.AttributeMap);
+  public void addAttributeModifiers(net.minecraft.world.entity.ai.attributes.AttributeMap, int);
+  public boolean isBeneficial();
+  public net.minecraft.core.particles.ParticleOptions createParticleOptions(net.minecraft.world.effect.MobEffectInstance);
+  public net.minecraft.world.effect.MobEffect withSoundOnAdded(net.minecraft.sounds.SoundEvent);
+  public net.minecraft.world.effect.MobEffect requiredFeatures(net.minecraft.world.flag.FeatureFlag...);
+  public net.minecraft.world.flag.FeatureFlagSet requiredFeatures();
+  static {};
+}
