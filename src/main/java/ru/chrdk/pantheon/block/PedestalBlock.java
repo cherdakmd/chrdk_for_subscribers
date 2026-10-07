@@ -2,6 +2,7 @@ package ru.chrdk.pantheon.block;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -12,6 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -21,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 import ru.chrdk.pantheon.data.PantheonData;
@@ -32,21 +35,30 @@ import ru.chrdk.pantheon.util.Text;
  * Постамент — место подписчика на чердаке.
  *
  * <p>Ритуал: пустую печать переименовываем в наковальне в ник подписчика, щёлкаем ею по постаменту —
- * печать «впечатывается», а над постаментом появляется статуэтка. Shift + правый клик снимает фигурку
- * и возвращает печать с именем (данные не теряются).
+ * печать «впечатывается», а над постаментом появляется фигурка подписчика. Shift + правый клик снимает
+ * фигурку и возвращает печать с именем (данные не теряются).
+ *
+ * <p>Фигурка разворачивается туда, куда смотрел игрок при установке постамента.
  */
 public class PedestalBlock extends BaseEntityBlock {
 	public static final BooleanProperty OCCUPIED = BlockStateProperties.OCCUPIED;
+	public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
 	public PedestalBlock(Properties properties) {
 		super(properties);
-		registerDefaultState(defaultBlockState().setValue(OCCUPIED, false));
+		registerDefaultState(defaultBlockState().setValue(OCCUPIED, false).setValue(FACING, Direction.NORTH));
 	}
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
-		builder.add(OCCUPIED);
+		builder.add(OCCUPIED, FACING);
+	}
+
+	@Override
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		// Фигурка смотрит на игрока, который поставил постамент.
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
 	@Override
@@ -122,8 +134,11 @@ public class PedestalBlock extends BaseEntityBlock {
 			subscriber = data.find(nick).orElse(null);
 		}
 
-		pedestal.setSubscriber(nick);
+		int tier = subscriber == null ? 1 : subscriber.tier();
+		pedestal.setSubscriber(nick, tier);
 		level.setBlockAndUpdate(pos, state.setValue(OCCUPIED, true));
+		// Отправляем клиентам данные постамента (ник и тир), иначе фигурка не появится сразу.
+		level.sendBlockUpdated(pos, state, level.getBlockState(pos), Block.UPDATE_ALL);
 		stack.shrink(1);
 
 		level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.0F, 1.3F);
@@ -135,7 +150,6 @@ public class PedestalBlock extends BaseEntityBlock {
 				pos.getX() + 0.5D, pos.getY() + 1.2D, pos.getZ() + 0.5D,
 				8, 0.2D, 0.3D, 0.2D, 0.02D);
 
-		int tier = subscriber == null ? 1 : subscriber.tier();
 		player.sendSystemMessage(Component.literal("✦ " + nick + " водружён на постамент (тир " + tier + "). Чердак помнит.")
 				.withStyle(ChatFormatting.GOLD));
 	}
@@ -147,8 +161,9 @@ public class PedestalBlock extends BaseEntityBlock {
 		}
 
 		String nick = pedestal.getSubscriber();
-		pedestal.setSubscriber("");
+		pedestal.setSubscriber("", 1);
 		level.setBlockAndUpdate(pos, state.setValue(OCCUPIED, false));
+		level.sendBlockUpdated(pos, state, level.getBlockState(pos), Block.UPDATE_ALL);
 
 		if (nick.isEmpty()) {
 			return;
