@@ -1,0 +1,15 @@
+### net.minecraft.client.model.geom.builders.PartDefinition
+Compiled from "PartDefinition.java"
+public class net.minecraft.client.model.geom.builders.PartDefinition {
+  net.minecraft.client.model.geom.builders.PartDefinition(java.util.List<net.minecraft.client.model.geom.builders.CubeDefinition>, net.minecraft.client.model.geom.PartPose);
+  public net.minecraft.client.model.geom.builders.PartDefinition addOrReplaceChild(java.lang.String, net.minecraft.client.model.geom.builders.CubeListBuilder, net.minecraft.client.model.geom.PartPose);
+  public net.minecraft.client.model.geom.builders.PartDefinition addOrReplaceChild(java.lang.String, net.minecraft.client.model.geom.builders.PartDefinition);
+  public net.minecraft.client.model.geom.builders.PartDefinition clearRecursively();
+  public net.minecraft.client.model.geom.builders.PartDefinition clearChild(java.lang.String);
+  public void retainPartsAndChildren(java.util.Set<java.lang.String>);
+  public void retainExactParts(java.util.Set<java.lang.String>);
+  public net.minecraft.client.model.geom.ModelPart bake(int, int);
+  public net.minecraft.client.model.geom.builders.PartDefinition getChild(java.lang.String);
+  public java.util.Set<java.util.Map$Entry<java.lang.String, net.minecraft.client.model.geom.builders.PartDefinition>> getChildren();
+  public net.minecraft.client.model.geom.builders.PartDefinition transformed(java.util.function.UnaryOperator<net.minecraft.client.model.geom.PartPose>);
+}

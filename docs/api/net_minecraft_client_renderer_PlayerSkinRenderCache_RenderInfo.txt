@@ -1,0 +1,13 @@
+### net.minecraft.client.renderer.PlayerSkinRenderCache$RenderInfo
+Compiled from "PlayerSkinRenderCache.java"
+public final class net.minecraft.client.renderer.PlayerSkinRenderCache$RenderInfo {
+  final net.minecraft.client.renderer.PlayerSkinRenderCache this$0;
+  public net.minecraft.client.renderer.PlayerSkinRenderCache$RenderInfo(net.minecraft.client.renderer.PlayerSkinRenderCache, com.mojang.authlib.GameProfile, net.minecraft.world.entity.player.PlayerSkin, net.minecraft.world.entity.player.PlayerSkin$Patch);
+  public com.mojang.authlib.GameProfile gameProfile();
+  public net.minecraft.world.entity.player.PlayerSkin playerSkin();
+  public net.minecraft.client.renderer.rendertype.RenderType renderType();
+  public com.mojang.renderpearl.api.textures.GpuTextureView textureView();
+  public net.minecraft.client.gui.font.GlyphRenderTypes glyphRenderTypes();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+}

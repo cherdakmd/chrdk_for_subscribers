@@ -1,3 +1,19 @@
-### com.mojang.math.Axis
-Error: class not found: com.mojang.math.Axis
-FAILED
+### com.mojang.math.Axis (поиск по всем jar)
+found in: /home/runner/.gradle/caches/fabric-loom/26.3/minecraft-extracted_server.jar
+Compiled from "Axis.java"
+public interface com.mojang.math.Axis {
+  public static final com.mojang.math.Axis XN;
+  public static final com.mojang.math.Axis XP;
+  public static final com.mojang.math.Axis YN;
+  public static final com.mojang.math.Axis YP;
+  public static final com.mojang.math.Axis ZN;
+  public static final com.mojang.math.Axis ZP;
+  public static com.mojang.math.Axis of(org.joml.Vector3fc);
+  public abstract org.joml.Quaternionf rotation(float);
+  public default org.joml.Quaternionf rotationDegrees(float);
+  public abstract org.joml.Matrix3f rotate(org.joml.Matrix3f, float);
+  public default org.joml.Matrix3f rotateDegrees(org.joml.Matrix3f, float);
+  public abstract org.joml.Matrix4f rotate(org.joml.Matrix4f, float);
+  public default org.joml.Matrix4f rotateDegrees(org.joml.Matrix4f, float);
+  static {};
+}

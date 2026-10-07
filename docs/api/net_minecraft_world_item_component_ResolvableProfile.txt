@@ -1,3 +1,0 @@
-### net.minecraft.world.item.component.ResolvableProfile
-Error: class not found: net.minecraft.world.item.component.ResolvableProfile
-FAILED

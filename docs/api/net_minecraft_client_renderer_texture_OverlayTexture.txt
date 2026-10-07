@@ -1,0 +1,16 @@
+### net.minecraft.client.renderer.texture.OverlayTexture
+Compiled from "OverlayTexture.java"
+public class net.minecraft.client.renderer.texture.OverlayTexture implements java.lang.AutoCloseable {
+  public static final int NO_WHITE_U;
+  public static final int RED_OVERLAY_V;
+  public static final int WHITE_OVERLAY_V;
+  public static final int NO_OVERLAY;
+  public net.minecraft.client.renderer.texture.OverlayTexture();
+  public void close();
+  public static int u(float);
+  public static int v(boolean);
+  public static int pack(int, int);
+  public static int pack(float, boolean);
+  public com.mojang.renderpearl.api.textures.GpuTextureView getTextureView();
+  static {};
+}
