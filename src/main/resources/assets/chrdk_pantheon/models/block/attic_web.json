@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/cross",
+	"textures": {
+		"cross": "chrdk_pantheon:block/attic_web"
+	}
+}

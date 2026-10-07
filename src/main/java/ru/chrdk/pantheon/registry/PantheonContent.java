@@ -16,17 +16,22 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CarpetBlock;
+import net.minecraft.world.level.block.WebBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import ru.chrdk.pantheon.PantheonMod;
 import ru.chrdk.pantheon.block.AtticAltarBlock;
+import ru.chrdk.pantheon.block.AtticGlassBlock;
 import ru.chrdk.pantheon.block.CandelabraBlock;
 import ru.chrdk.pantheon.block.ObeliskBlock;
 import ru.chrdk.pantheon.block.PedestalBlock;
 import ru.chrdk.pantheon.block.PedestalBlockEntity;
 import ru.chrdk.pantheon.block.PortraitBlock;
 import ru.chrdk.pantheon.block.PortraitBlockEntity;
+import ru.chrdk.pantheon.block.SubscriberChestBlock;
+import ru.chrdk.pantheon.block.SubscriberChestBlockEntity;
 import ru.chrdk.pantheon.item.NameScrollItem;
 
 /** Всё, что мод добавляет в игру: блоки, предметы, сущности блоков и вкладка креатива. */
@@ -41,6 +46,14 @@ public final class PantheonContent {
 	public static final ResourceKey<Item> OBELISK_ITEM_KEY = itemKey("obelisk");
 	public static final ResourceKey<Block> CANDELABRA_BLOCK_KEY = blockKey("candelabra");
 	public static final ResourceKey<Item> CANDELABRA_ITEM_KEY = itemKey("candelabra");
+	public static final ResourceKey<Block> SUBSCRIBER_CHEST_BLOCK_KEY = blockKey("subscriber_chest");
+	public static final ResourceKey<Item> SUBSCRIBER_CHEST_ITEM_KEY = itemKey("subscriber_chest");
+	public static final ResourceKey<Block> ATTIC_DUST_BLOCK_KEY = blockKey("attic_dust");
+	public static final ResourceKey<Item> ATTIC_DUST_ITEM_KEY = itemKey("attic_dust");
+	public static final ResourceKey<Block> ATTIC_WEB_BLOCK_KEY = blockKey("attic_web");
+	public static final ResourceKey<Item> ATTIC_WEB_ITEM_KEY = itemKey("attic_web");
+	public static final ResourceKey<Block> ATTIC_GLASS_BLOCK_KEY = blockKey("attic_glass");
+	public static final ResourceKey<Item> ATTIC_GLASS_ITEM_KEY = itemKey("attic_glass");
 	public static final ResourceKey<Item> BLANK_SEAL_KEY = itemKey("blank_seal");
 	public static final ResourceKey<Item> NAME_SCROLL_KEY = itemKey("name_scroll");
 	public static final ResourceKey<CreativeModeTab> ATTIC_TAB_KEY = ResourceKey.create(Registries.CREATIVE_MODE_TAB, PantheonMod.id("attic"));
@@ -55,10 +68,19 @@ public final class PantheonContent {
 	public static Item OBELISK_ITEM;
 	public static Block CANDELABRA;
 	public static Item CANDELABRA_ITEM;
+	public static Block SUBSCRIBER_CHEST;
+	public static Item SUBSCRIBER_CHEST_ITEM;
+	public static Block ATTIC_DUST;
+	public static Item ATTIC_DUST_ITEM;
+	public static Block ATTIC_WEB;
+	public static Item ATTIC_WEB_ITEM;
+	public static Block ATTIC_GLASS;
+	public static Item ATTIC_GLASS_ITEM;
 	public static Item BLANK_SEAL;
 	public static Item NAME_SCROLL;
 	public static BlockEntityType<PedestalBlockEntity> PEDESTAL_ENTITY;
 	public static BlockEntityType<PortraitBlockEntity> PORTRAIT_ENTITY;
+	public static BlockEntityType<SubscriberChestBlockEntity> SUBSCRIBER_CHEST_ENTITY;
 	public static CreativeModeTab ATTIC_TAB;
 
 	private PantheonContent() {
@@ -82,6 +104,21 @@ public final class PantheonContent {
 				properties -> properties.lightLevel(state -> 14));
 		CANDELABRA_ITEM = registerBlockItem(CANDELABRA, CANDELABRA_ITEM_KEY);
 
+		// Ларь подписчика: пока его не открывали, подсвечивается изнутри.
+		SUBSCRIBER_CHEST = registerBlock(SUBSCRIBER_CHEST_BLOCK_KEY, SubscriberChestBlock::new, Blocks.CHEST,
+				properties -> properties.lightLevel(state -> state.getValue(SubscriberChestBlock.OPENED) ? 0 : 8));
+		SUBSCRIBER_CHEST_ITEM = registerBlockItem(SUBSCRIBER_CHEST, SUBSCRIBER_CHEST_ITEM_KEY);
+
+		// Декор чердака: пыль, паутина и витраж с гербом.
+		ATTIC_DUST = registerBlock(ATTIC_DUST_BLOCK_KEY, CarpetBlock::new, Blocks.WHITE_CARPET);
+		ATTIC_DUST_ITEM = registerBlockItem(ATTIC_DUST, ATTIC_DUST_ITEM_KEY);
+
+		ATTIC_WEB = registerBlock(ATTIC_WEB_BLOCK_KEY, WebBlock::new, Blocks.COBWEB);
+		ATTIC_WEB_ITEM = registerBlockItem(ATTIC_WEB, ATTIC_WEB_ITEM_KEY);
+
+		ATTIC_GLASS = registerBlock(ATTIC_GLASS_BLOCK_KEY, AtticGlassBlock::new, Blocks.GLASS);
+		ATTIC_GLASS_ITEM = registerBlockItem(ATTIC_GLASS, ATTIC_GLASS_ITEM_KEY);
+
 		BLANK_SEAL = Registry.register(BuiltInRegistries.ITEM, BLANK_SEAL_KEY,
 				new Item(new Item.Properties().stacksTo(16).setId(BLANK_SEAL_KEY)));
 
@@ -94,6 +131,9 @@ public final class PantheonContent {
 		PORTRAIT_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, PantheonMod.id("portrait"),
 				FabricBlockEntityTypeBuilder.create(PortraitBlockEntity::new, PORTRAIT).build());
 
+		SUBSCRIBER_CHEST_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, PantheonMod.id("subscriber_chest"),
+				FabricBlockEntityTypeBuilder.create(SubscriberChestBlockEntity::new, SUBSCRIBER_CHEST).build());
+
 		ATTIC_TAB = Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ATTIC_TAB_KEY,
 				FabricCreativeModeTab.builder()
 						.title(Component.translatable("itemGroup.chrdk_pantheon.attic"))
@@ -104,6 +144,10 @@ public final class PantheonContent {
 							entries.accept(PORTRAIT_ITEM);
 							entries.accept(OBELISK_ITEM);
 							entries.accept(CANDELABRA_ITEM);
+							entries.accept(SUBSCRIBER_CHEST_ITEM);
+							entries.accept(ATTIC_DUST_ITEM);
+							entries.accept(ATTIC_WEB_ITEM);
+							entries.accept(ATTIC_GLASS_ITEM);
 							entries.accept(BLANK_SEAL);
 							entries.accept(NAME_SCROLL);
 						})

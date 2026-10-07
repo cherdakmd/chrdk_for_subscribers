@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		{
+			"item": "chrdk_pantheon:attic_web"
+		},
+		{
+			"item": "minecraft:sand"
+		},
+		{
+			"item": "minecraft:sand"
+		}
+	],
+	"result": {
+		"id": "chrdk_pantheon:attic_dust",
+		"count": 4
+	}
+}

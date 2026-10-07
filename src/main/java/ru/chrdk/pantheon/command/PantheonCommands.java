@@ -33,6 +33,7 @@ import ru.chrdk.pantheon.gameplay.AuraService;
 import ru.chrdk.pantheon.gameplay.AuraTier;
 import ru.chrdk.pantheon.item.Seals;
 import ru.chrdk.pantheon.registry.PantheonContent;
+import ru.chrdk.pantheon.util.Chat;
 import ru.chrdk.pantheon.util.Text;
 
 /**
@@ -76,6 +77,23 @@ public final class PantheonCommands {
 						.executes(context -> scroll(context.getSource())))
 				.then(literal("book")
 						.executes(context -> book(context.getSource())))
+				.then(literal("info")
+						.then(argument("ник", StringArgumentType.greedyString())
+								.executes(context -> info(context.getSource(),
+										StringArgumentType.getString(context, "ник")))))
+				.then(literal("find")
+						.then(argument("текст", StringArgumentType.greedyString())
+								.executes(context -> find(context.getSource(),
+										StringArgumentType.getString(context, "текст")))))
+				.then(literal("top")
+						.executes(context -> top(context.getSource(), 10))
+						.then(argument("сколько", IntegerArgumentType.integer(1, 50))
+								.executes(context -> top(context.getSource(),
+										IntegerArgumentType.getInteger(context, "сколько")))))
+				.then(literal("toggle")
+						.then(argument("ник", StringArgumentType.greedyString())
+								.executes(context -> toggle(context.getSource(),
+										StringArgumentType.getString(context, "ник")))))
 				.then(literal("aura")
 						.executes(context -> aura(context.getSource(), null))
 						.then(literal("on")
@@ -94,32 +112,70 @@ public final class PantheonCommands {
 	}
 
 	private static int list(CommandSourceStack source, int page) {
-		PantheonData data = PantheonData.get(source.getLevel());
-		List<Subscriber> subscribers = data.all();
+		Catalog.page(source.getLevel(), page, message -> source.sendSuccess(() -> message, false));
+		return 1;
+	}
 
-		if (subscribers.isEmpty()) {
-			source.sendSuccess(() -> Component.literal("Чердак пуст: ни одного имени.").withStyle(ChatFormatting.GRAY), false);
+	private static int info(CommandSourceStack source, String rawNick) {
+		String nick = rawNick.trim();
+		PantheonData data = PantheonData.get(source.getLevel());
+		Subscriber subscriber = data.find(nick).orElse(null);
+
+		if (subscriber == null) {
+			source.sendFailure(Component.literal("В летописи нет имени " + nick + ". Поиск: /attic find " + nick));
 			return 0;
 		}
 
-		int pages = (subscribers.size() + PAGE_SIZE - 1) / PAGE_SIZE;
-		int current = Math.min(Math.max(page, 1), pages);
-		int from = (current - 1) * PAGE_SIZE;
-		int to = Math.min(from + PAGE_SIZE, subscribers.size());
+		Catalog.card(source.getLevel(), subscriber, message -> source.sendSuccess(() -> message, false));
+		return 1;
+	}
 
-		source.sendSuccess(() -> Component.literal("── Летопись чердака · стр. " + current + "/" + pages
-				+ " · всего " + subscribers.size() + " ──").withStyle(ChatFormatting.GOLD), false);
+	private static int find(CommandSourceStack source, String query) {
+		Catalog.find(source.getLevel(), query.trim(), message -> source.sendSuccess(() -> message, false));
+		return 1;
+	}
 
-		for (int i = from; i < to; i++) {
-			final int number = i + 1;
-			final Subscriber subscriber = subscribers.get(i);
-			source.sendSuccess(() -> Component.literal("#" + number + " " + subscriber.name()
-					+ " · тир " + subscriber.tier()
-					+ " · " + Text.date(subscriber.addedAt())
-					+ (subscriber.active() ? "" : " · потух")).withStyle(ChatFormatting.GRAY), false);
+	private static int top(CommandSourceStack source, int limit) {
+		PantheonData data = PantheonData.get(source.getLevel());
+		source.sendSuccess(() -> Component.literal("── Обласканные дарами ──").withStyle(ChatFormatting.GOLD), false);
+
+		int shown = 0;
+
+		for (Subscriber subscriber : data.mostHonoured(limit)) {
+			if (subscriber.offerings() == 0) {
+				break;
+			}
+
+			source.sendSuccess(() -> Component.literal("✦" + subscriber.offerings() + " ").withStyle(ChatFormatting.YELLOW)
+					.append(Chat.name(subscriber)), false);
+			shown++;
 		}
 
-		return to - from;
+		if (shown == 0) {
+			source.sendSuccess(() -> Component.literal("Даров пока никто не приносил: щёлкни предметом по занятому святилищу.")
+					.withStyle(ChatFormatting.GRAY), false);
+		}
+
+		return shown;
+	}
+
+	private static int toggle(CommandSourceStack source, String rawNick) {
+		String nick = rawNick.trim();
+		PantheonData data = PantheonData.get(source.getLevel());
+		Subscriber subscriber = data.find(nick).orElse(null);
+
+		if (subscriber == null) {
+			source.sendFailure(Component.literal("В летописи нет имени " + nick + "."));
+			return 0;
+		}
+
+		boolean nowActive = !subscriber.active();
+		data.setActive(nick, nowActive);
+		source.sendSuccess(() -> Component.literal(nowActive
+				? "✦ " + subscriber.name() + " снова в строю: фигурка светится и считается в ауре."
+				: "✧ " + subscriber.name() + " потух: место остаётся в истории, но аура его не считает.")
+				.withStyle(nowActive ? ChatFormatting.GOLD : ChatFormatting.DARK_GRAY), true);
+		return 1;
 	}
 
 	private static int add(CommandSourceStack source, String rawNick) {

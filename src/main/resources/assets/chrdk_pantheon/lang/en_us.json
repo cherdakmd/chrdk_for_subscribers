@@ -6,5 +6,10 @@
 	"block.chrdk_pantheon.obelisk": "Obelisk of Names",
 	"block.chrdk_pantheon.candelabra": "Attic Candelabra",
 	"item.chrdk_pantheon.blank_seal": "Blank Seal",
-	"item.chrdk_pantheon.name_scroll": "Scroll of Names"
+	"item.chrdk_pantheon.name_scroll": "Scroll of Names",
+	"block.chrdk_pantheon.subscriber_chest": "Subscriber Chest",
+	"block.chrdk_pantheon.attic_dust": "Age-old Dust",
+	"block.chrdk_pantheon.attic_web": "Attic Cobweb",
+	"block.chrdk_pantheon.attic_glass": "Attic Stained Glass",
+	"container.chrdk_pantheon.subscriber_chest": "Subscriber Chest"
 }

@@ -172,6 +172,11 @@ public abstract class AtticShrineBlock extends BaseEntityBlock {
 				8, 0.2D, 0.3D, 0.2D, 0.02D);
 
 		player.sendSystemMessage(onEnshrined(nick, tier).copy().withStyle(ChatFormatting.GOLD));
+		afterEnshrine(level, pos, shrine, nick, tier);
+	}
+
+	/** Хук для наследников: например, сундук подписчика кладёт внутрь приветственный подарок. */
+	protected void afterEnshrine(ServerLevel level, BlockPos pos, ShrineBlockEntity shrine, String nick, int tier) {
 	}
 
 	/** Снимает фигурку и возвращает печать с именем. */

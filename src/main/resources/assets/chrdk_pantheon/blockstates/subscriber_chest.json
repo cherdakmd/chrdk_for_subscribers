@@ -1,0 +1,64 @@
+{
+	"variants": {
+		"facing=north,occupied=false,opened=false": {
+			"model": "chrdk_pantheon:block/subscriber_chest"
+		},
+		"facing=north,occupied=false,opened=true": {
+			"model": "chrdk_pantheon:block/subscriber_chest"
+		},
+		"facing=north,occupied=true,opened=false": {
+			"model": "chrdk_pantheon:block/subscriber_chest"
+		},
+		"facing=north,occupied=true,opened=true": {
+			"model": "chrdk_pantheon:block/subscriber_chest"
+		},
+		"facing=east,occupied=false,opened=false": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 90
+		},
+		"facing=east,occupied=false,opened=true": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 90
+		},
+		"facing=east,occupied=true,opened=false": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 90
+		},
+		"facing=east,occupied=true,opened=true": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 90
+		},
+		"facing=south,occupied=false,opened=false": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 180
+		},
+		"facing=south,occupied=false,opened=true": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 180
+		},
+		"facing=south,occupied=true,opened=false": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 180
+		},
+		"facing=south,occupied=true,opened=true": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 180
+		},
+		"facing=west,occupied=false,opened=false": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 270
+		},
+		"facing=west,occupied=false,opened=true": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 270
+		},
+		"facing=west,occupied=true,opened=false": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 270
+		},
+		"facing=west,occupied=true,opened=true": {
+			"model": "chrdk_pantheon:block/subscriber_chest",
+			"y": 270
+		}
+	}
+}

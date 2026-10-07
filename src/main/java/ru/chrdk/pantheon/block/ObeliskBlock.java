@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+import ru.chrdk.pantheon.command.Catalog;
 import ru.chrdk.pantheon.data.LedgerBook;
 import ru.chrdk.pantheon.data.PantheonData;
 import ru.chrdk.pantheon.data.Subscriber;
@@ -42,16 +43,12 @@ public class ObeliskBlock extends Block {
 		player.sendSystemMessage(Component.literal("── Обелиск Имён ──").withStyle(ChatFormatting.GOLD));
 		player.sendSystemMessage(LedgerBook.summary(serverLevel));
 
-		List<Subscriber> latest = data.latest(3);
-
-		if (latest.isEmpty()) {
+		if (data.size() == 0) {
 			player.sendSystemMessage(Component.literal("Полки пусты: летопись ещё не начата.").withStyle(ChatFormatting.DARK_GRAY));
 		} else {
-			for (Subscriber subscriber : latest) {
-				player.sendSystemMessage(Component.literal("  · " + subscriber.name()
-						+ " — тир " + subscriber.tier()
-						+ ", с " + Text.date(subscriber.addedAt())).withStyle(ChatFormatting.GRAY));
-			}
+			Catalog.page(serverLevel, 1, player::sendSystemMessage);
+			player.sendSystemMessage(Component.literal("Клик по имени — карточка подписчика (/attic info).")
+					.withStyle(ChatFormatting.DARK_GRAY));
 		}
 
 		ItemStack book = LedgerBook.create(serverLevel);

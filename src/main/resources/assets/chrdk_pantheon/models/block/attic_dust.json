@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/carpet",
+	"textures": {
+		"wool": "chrdk_pantheon:block/attic_dust"
+	}
+}

@@ -2,6 +2,7 @@
 	"replace": false,
 	"values": [
 		"chrdk_pantheon:attic_altar",
-		"chrdk_pantheon:portrait"
+		"chrdk_pantheon:portrait",
+		"chrdk_pantheon:subscriber_chest"
 	]
 }

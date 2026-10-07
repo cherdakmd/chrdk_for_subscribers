@@ -17,6 +17,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 
 import ru.chrdk.pantheon.block.AtticShrineBlock;
 import ru.chrdk.pantheon.block.ShrineBlockEntity;
+import ru.chrdk.pantheon.block.SubscriberChestBlock;
 import ru.chrdk.pantheon.data.PantheonData;
 import ru.chrdk.pantheon.data.Subscriber;
 
@@ -88,6 +89,11 @@ public final class AuraService {
 
 		for (BlockPos pos : data.shrines()) {
 			if (!pos.closerThan(origin, RADIUS) || !level.isLoaded(pos)) {
+				continue;
+			}
+
+			// Ларь подписчика — тоже святилище, но ауру дают именно фигурки и портреты.
+			if (level.getBlockState(pos).getBlock() instanceof SubscriberChestBlock) {
 				continue;
 			}
 
