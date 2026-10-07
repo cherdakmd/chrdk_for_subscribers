@@ -78,7 +78,24 @@ jobs:
             net.minecraft.world.item.ItemStack \
             'net.minecraft.world.level.block.state.BlockBehaviour$Properties' \
             net.minecraft.world.item.component.ItemLore \
-            com.mojang.blaze3d.vertex.PoseStack ; do
+            com.mojang.blaze3d.vertex.PoseStack \
+            net.minecraft.world.effect.MobEffect \
+            net.minecraft.world.effect.MobEffectInstance \
+            net.minecraft.world.effect.MobEffects \
+            net.minecraft.world.entity.LivingEntity \
+            net.minecraft.world.entity.player.Player \
+            net.minecraft.world.entity.player.Inventory \
+            net.minecraft.server.level.ServerPlayer \
+            net.minecraft.server.level.ServerLevel \
+            net.minecraft.server.MinecraftServer \
+            net.minecraft.world.level.Level \
+            net.minecraft.world.entity.item.ItemEntity \
+            net.minecraft.world.item.Item \
+            net.minecraft.world.level.saveddata.SavedData \
+            net.minecraft.world.level.storage.ValueInput \
+            net.minecraft.world.level.storage.ValueOutput \
+            net.minecraft.core.BlockPos \
+            net.minecraft.core.Holder ; do
             name=$(echo "$cls" | tr '.' '_' | tr '$' '_')
             {
               echo "### $cls"
