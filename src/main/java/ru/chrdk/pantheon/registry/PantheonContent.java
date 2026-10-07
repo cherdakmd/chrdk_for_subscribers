@@ -110,7 +110,7 @@ public final class PantheonContent {
 		SUBSCRIBER_CHEST_ITEM = registerBlockItem(SUBSCRIBER_CHEST, SUBSCRIBER_CHEST_ITEM_KEY);
 
 		// Декор чердака: пыль, паутина и витраж с гербом.
-		ATTIC_DUST = registerBlock(ATTIC_DUST_BLOCK_KEY, CarpetBlock::new, Blocks.WHITE_CARPET);
+		ATTIC_DUST = registerBlock(ATTIC_DUST_BLOCK_KEY, CarpetBlock::new, Blocks.MOSS_CARPET);
 		ATTIC_DUST_ITEM = registerBlockItem(ATTIC_DUST, ATTIC_DUST_ITEM_KEY);
 
 		ATTIC_WEB = registerBlock(ATTIC_WEB_BLOCK_KEY, WebBlock::new, Blocks.COBWEB);
