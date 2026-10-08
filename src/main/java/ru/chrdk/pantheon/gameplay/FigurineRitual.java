@@ -16,13 +16,14 @@ public final class FigurineRitual {
 	/** Выше пятого тира фигурки не растут — дальше только эндгейм-реликвии. */
 	public static final int MAX_TIER = 5;
 
-	private record Cost(Item item, int count) {
+	private FigurineRitual() {
+	}
+
+	/** Одна позиция ритуального ресурса: предмет и сколько надо. */
+	public record Cost(Item item, int count) {
 		boolean matches(ItemStack stack) {
 			return stack.is(item);
 		}
-	}
-
-	private FigurineRitual() {
 	}
 
 	/** Ресурсы для перехода с тира {@code tier} на тир выше (с тира 5 — пусто). */
@@ -67,10 +68,5 @@ public final class FigurineRitual {
 		}
 
 		return String.join(", ", parts);
-	}
-
-	/** Короткая подсказка, чем возвышать с этого тира. */
-	public static Component hint(int tier) {
-		return Component.literal(describe(costFor(tier)));
 	}
 }
