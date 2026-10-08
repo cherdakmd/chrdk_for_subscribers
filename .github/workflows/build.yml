@@ -198,3 +198,10 @@ jobs:
         with:
           name: api-dump
           path: api-dump.txt
+      - name: commit api dump to branch
+        run: |
+          git config user.name "apidump"
+          git config user.email "apidump@users.noreply.github.com"
+          git add api-dump.txt
+          git commit -m "debug: api dump 26.3 (временный, будет удалён)" || true
+          git push origin HEAD:arena/e651fa52-chrdk-for-subscribers
