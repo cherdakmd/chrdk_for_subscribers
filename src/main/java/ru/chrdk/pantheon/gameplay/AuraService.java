@@ -22,8 +22,8 @@ import ru.chrdk.pantheon.data.PantheonData;
 import ru.chrdk.pantheon.data.Subscriber;
 
 /**
- * Аура Пантеона: считает фигурки и портреты подписчиков вокруг игрока и выдаёт баффы
- * по ступеням {@link AuraTier}. Рост канала = сила в мире.
+ * Аура Пантеона: считает фигурки и портреты подписчиков вокруг игрока (с весом по тиру)
+ * и выдаёт баффы по ступеням {@link AuraTier}. Рост канала = сила в мире.
  *
  * <p>Пересчёт раз в 5 секунд, чтобы не гонять поиск по святилищам каждый тик.
  */
@@ -69,7 +69,7 @@ public final class AuraService {
 
 			if (previous != tier) {
 				player.sendSystemMessage(Component.literal("Аура Пантеона: " + tier.title()
-						+ " — рядом " + count + " фигурок (" + tier.effect().value().getDisplayName().getString() + ")")
+						+ " — рядом " + count + " очков ауры (" + tier.effect().value().getDisplayName().getString() + ")")
 						.withStyle(ChatFormatting.GOLD));
 			}
 
@@ -82,7 +82,10 @@ public final class AuraService {
 		}
 	}
 
-	/** Сколько активных подписчиков «стоит» рядом с игроком. */
+	/**
+	 * Сила ауры рядом с игроком: тир каждой активной фигурки и портрета суммируется
+	 * (фигурка третьего тира даёт три очка), поэтому высокие тиры заметнее в ауре.
+	 */
 	public static int countNear(ServerLevel level, PantheonData data, ServerPlayer player) {
 		BlockPos origin = player.blockPosition();
 		int count = 0;
@@ -104,7 +107,7 @@ public final class AuraService {
 			boolean active = data.find(shrine.getSubscriber()).map(Subscriber::active).orElse(true);
 
 			if (active) {
-				count++;
+				count += shrine.getTier();
 			}
 		}
 

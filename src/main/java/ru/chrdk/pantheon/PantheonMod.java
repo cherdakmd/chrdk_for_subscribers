@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import ru.chrdk.pantheon.command.PantheonCommands;
 import ru.chrdk.pantheon.gameplay.AuraService;
+import ru.chrdk.pantheon.recipe.PantheonRecipes;
 import ru.chrdk.pantheon.registry.PantheonContent;
 
 /**
@@ -24,6 +25,7 @@ public class PantheonMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		PantheonContent.register();
+		PantheonRecipes.register();
 		PantheonCommands.register();
 		AuraService.register();
 

@@ -35,10 +35,12 @@ import ru.chrdk.pantheon.registry.PantheonContent;
 import ru.chrdk.pantheon.util.Text;
 
 /**
- * Общая механика «святилищ»: постамент с фигуркой и портретная рама.
+ * Общая механика «святилищ»: постамент с фигуркой, портретная рама и ларь подписчика.
  *
  * <p>Ритуал один и тот же: переименованную в наковальне печать щёлкаем по святилищу —
- * имя впечатывается и попадает в летопись. Shift + правый клик — снять и забрать печать.
+ * имя впечатывается и попадает в летопись. На постамент можно водрузить и фигурку (v0.6):
+ * она приносит в летопись свой тир, повышая запись, а не дублируя её.
+ * Shift + правый клик — снять: с постамента возвращается фигурка, с рамы и ларя — печать.
  * Правый клик любым другим предметом — подношение: подписчик благодарит даром.
  */
 public abstract class AtticShrineBlock extends BaseEntityBlock {
@@ -92,7 +94,7 @@ public abstract class AtticShrineBlock extends BaseEntityBlock {
 
 			if (held != null) {
 				player.sendSystemMessage(Component.literal("Здесь уже стоит " + shrine.getSubscriber()
-						+ ". Shift + правый клик — снять и забрать печать.").withStyle(ChatFormatting.DARK_GRAY));
+						+ ". Shift + правый клик — снять и забрать фигурку или печать.").withStyle(ChatFormatting.DARK_GRAY));
 				return InteractionResult.SUCCESS;
 			}
 
@@ -105,14 +107,32 @@ public abstract class AtticShrineBlock extends BaseEntityBlock {
 			return InteractionResult.SUCCESS;
 		}
 
+		boolean figurine = SubscriberFigurineItem.isFigurine(stack);
 		String nick = Seals.nameOf(stack);
 
 		if (nick == null) {
-			return InteractionResult.PASS;
+			if (figurine && level instanceof ServerLevel) {
+				player.sendSystemMessage(Component.literal("Фигурка без имени: назови пустую печать в наковальне "
+						+ "и отлей фигурку в верстаке — печать + свеча + золотой слиток + бумага.")
+						.withStyle(ChatFormatting.DARK_GRAY));
+			}
+
+			return figurine ? InteractionResult.SUCCESS : InteractionResult.PASS;
 		}
 
+		if (figurine && !(this instanceof PedestalBlock)) {
+			if (level instanceof ServerLevel) {
+				player.sendSystemMessage(Component.literal("Фигурка водружается только на постамент — "
+						+ "для портретной рамы и ларя нужна именная печать.").withStyle(ChatFormatting.DARK_GRAY));
+			}
+
+			return InteractionResult.SUCCESS;
+		}
+
+		int figurineTier = figurine ? SubscriberFigurineItem.tierOf(stack) : -1;
+
 		if (level instanceof ServerLevel serverLevel) {
-			enshrine(serverLevel, pos, state, shrine, player, stack, nick);
+			enshrine(serverLevel, pos, state, shrine, player, stack, nick, figurineTier);
 		}
 
 		return InteractionResult.SUCCESS;
@@ -141,15 +161,20 @@ public abstract class AtticShrineBlock extends BaseEntityBlock {
 		return InteractionResult.SUCCESS;
 	}
 
-	/** Печатает имя подписчика на святилище. */
-	private void enshrine(ServerLevel level, BlockPos pos, BlockState state, ShrineBlockEntity shrine, Player player, ItemStack stack, String nick) {
+	/** Печатает имя подписчика на святилище. Фигурка приносит свой тир в летопись. */
+	private void enshrine(ServerLevel level, BlockPos pos, BlockState state, ShrineBlockEntity shrine, Player player, ItemStack stack, String nick, int figurineTier) {
 		PantheonData data = PantheonData.get(level);
 		Subscriber subscriber = data.find(nick).orElse(null);
 
 		if (subscriber == null) {
-			data.add(nick, "ручная печать", 1);
+			int startTier = figurineTier > 0 ? figurineTier : 1;
+			data.add(nick, figurineTier > 0 ? "фигурка" : "ручная печать", startTier);
 			subscriber = data.find(nick).orElse(null);
 			Milestones.check(level);
+		} else if (figurineTier > subscriber.tier()) {
+			// Повторная фигурка повышает тир в летописи, запись не дублируется.
+			data.setTier(nick, figurineTier);
+			subscriber = data.find(nick).orElse(null);
 		}
 
 		int tier = subscriber == null ? 1 : subscriber.tier();
@@ -180,13 +205,14 @@ public abstract class AtticShrineBlock extends BaseEntityBlock {
 	protected void afterEnshrine(ServerLevel level, BlockPos pos, ShrineBlockEntity shrine, String nick, int tier) {
 	}
 
-	/** Снимает фигурку и возвращает печать с именем. */
+	/** Снимает фигурку или портрет: с постамента возвращается фигурка с ником и тиром, с рамы и ларя — печать. */
 	private void release(Level level, BlockPos pos, BlockState state, ShrineBlockEntity shrine, Player player) {
 		if (!(level instanceof ServerLevel serverLevel)) {
 			return;
 		}
 
 		String nick = shrine.getSubscriber();
+		int tier = shrine.getTier();
 		shrine.setSubscriber("", 1);
 		PantheonData.get(serverLevel).untrackShrine(pos);
 
@@ -197,7 +223,10 @@ public abstract class AtticShrineBlock extends BaseEntityBlock {
 			return;
 		}
 
-		player.getInventory().placeItemBackInInventory(SubscriberFigurineItem.named(nick, shrine.getTier()), Prediction.SERVER_ONLY);
+		ItemStack back = this instanceof PedestalBlock
+				? SubscriberFigurineItem.named(nick, tier)
+				: Seals.named(nick);
+		player.getInventory().placeItemBackInInventory(back, Prediction.SERVER_ONLY);
 		level.playSound(null, pos, SoundEvents.ANVIL_HIT, SoundSource.BLOCKS, 0.8F, 0.8F);
 		player.sendSystemMessage(onReleased(nick).copy().withStyle(ChatFormatting.GRAY));
 	}
@@ -237,14 +266,15 @@ public abstract class AtticShrineBlock extends BaseEntityBlock {
 		Offerings.grant(serverLevel, pos, player, nick, shrine.getTier(), number);
 	}
 
-	/** Блоки мода — это стройматериал, а не подношение. */
+	/** Блоки мода и фигурки — это обстановка чердака, а не подношение. */
 	private static boolean isShrineFurniture(ItemStack stack) {
 		return stack.is(PantheonContent.PORTRAIT_ITEM)
 				|| stack.is(PantheonContent.PEDESTAL_ITEM)
 				|| stack.is(PantheonContent.OBELISK_ITEM)
 				|| stack.is(PantheonContent.CANDELABRA_ITEM)
 				|| stack.is(PantheonContent.ATTIC_ALTAR_ITEM)
-				|| stack.is(PantheonContent.NAME_SCROLL);
+				|| stack.is(PantheonContent.NAME_SCROLL)
+				|| stack.is(PantheonContent.SUBSCRIBER_FIGURINE);
 	}
 
 	/** Рассказывает, кто здесь увековечен. */
@@ -279,7 +309,7 @@ public abstract class AtticShrineBlock extends BaseEntityBlock {
 				+ " · на чердаке с " + Text.date(subscriber.addedAt())
 				+ " · " + subscriber.source()
 				+ " · " + status + " · " + offering).withStyle(ChatFormatting.GOLD));
-		player.sendSystemMessage(Component.literal("Правый клик предметом — подношение. Shift + правый клик — снять и забрать печать.")
+		player.sendSystemMessage(Component.literal("Правый клик предметом — подношение. Shift + правый клик — снять и забрать фигурку или печать.")
 				.withStyle(ChatFormatting.DARK_GRAY));
 	}
 }

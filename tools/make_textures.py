@@ -345,6 +345,37 @@ def name_scroll():
     return img
 
 
+def attic_chisel():
+    """Чердачный резец: рукоять из тёмного дерева, латунная обойма, стальное лезвие."""
+    img = new()
+    # рукоять — диагональ в нижний левый угол
+    for y in range(16):
+        for x in range(16):
+            if x <= 6 and 14 <= x + y <= 16:
+                d = random.randint(-6, 6)
+                px(img, x, y, (98 + d, 68 + d, 42 + d, 255))
+    # латунная обойма между рукоятью и лезвием
+    for y in range(16):
+        for x in range(16):
+            if 7 <= x <= 8 and 14 <= x + y <= 16:
+                d = random.randint(-6, 6)
+                px(img, x, y, (190 + d, 158 + d, 86 + d, 255))
+    # стальное лезвие — диагональ в верхний правый угол
+    for y in range(16):
+        for x in range(16):
+            if 9 <= x <= 15 and 14 <= x + y <= 16:
+                d = random.randint(-8, 8)
+                px(img, x, y, (170 + d, 174 + d, 180 + d, 255))
+    # острая кромка на кончике
+    for y in range(0, 3):
+        px(img, 15, y, (216, 220, 226, 255))
+    px(img, 14, 1, (200, 204, 210, 255))
+    # торец рукояти
+    px(img, 0, 15, (74, 50, 30, 255))
+    px(img, 1, 15, (74, 50, 30, 255))
+    return img
+
+
 def icon(size=128):
     img = new(size, size)
     bg = ImageDraw.Draw(img)

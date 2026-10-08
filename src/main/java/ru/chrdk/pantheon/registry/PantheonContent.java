@@ -6,6 +6,7 @@ import java.util.function.Function;
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import ru.chrdk.pantheon.PantheonMod;
+import ru.chrdk.pantheon.item.FigurineData;
 import ru.chrdk.pantheon.block.AtticAltarBlock;
 import ru.chrdk.pantheon.block.AtticGlassBlock;
 import ru.chrdk.pantheon.block.CandelabraBlock;
@@ -58,6 +60,7 @@ public final class PantheonContent {
 	public static final ResourceKey<Item> BLANK_SEAL_KEY = itemKey("blank_seal");
 	public static final ResourceKey<Item> NAME_SCROLL_KEY = itemKey("name_scroll");
 	public static final ResourceKey<Item> SUBSCRIBER_FIGURINE_KEY = itemKey("subscriber_figurine");
+	public static final ResourceKey<Item> ATTIC_CHISEL_KEY = itemKey("attic_chisel");
 	public static final ResourceKey<CreativeModeTab> ATTIC_TAB_KEY = ResourceKey.create(Registries.CREATIVE_MODE_TAB, PantheonMod.id("attic"));
 
 	public static Block ATTIC_ALTAR;
@@ -81,6 +84,9 @@ public final class PantheonContent {
 	public static Item BLANK_SEAL;
 	public static Item NAME_SCROLL;
 	public static Item SUBSCRIBER_FIGURINE;
+	public static Item ATTIC_CHISEL;
+	/** Ник и тир, записанные на фигурке подписчика. */
+	public static DataComponentType<FigurineData> FIGURINE;
 	public static BlockEntityType<PedestalBlockEntity> PEDESTAL_ENTITY;
 	public static BlockEntityType<PortraitBlockEntity> PORTRAIT_ENTITY;
 	public static BlockEntityType<SubscriberChestBlockEntity> SUBSCRIBER_CHEST_ENTITY;
@@ -130,6 +136,17 @@ public final class PantheonContent {
 		SUBSCRIBER_FIGURINE = Registry.register(BuiltInRegistries.ITEM, SUBSCRIBER_FIGURINE_KEY,
 				new SubscriberFigurineItem(new Item.Properties().setId(SUBSCRIBER_FIGURINE_KEY)));
 
+		// Резец — расходник для понижения тира фигурки через наковальню.
+		ATTIC_CHISEL = Registry.register(BuiltInRegistries.ITEM, ATTIC_CHISEL_KEY,
+				new Item(new Item.Properties().stacksTo(16).setId(ATTIC_CHISEL_KEY)));
+
+		// Ник и тир фигурки живут в компоненте и переживают крафт и наковальню.
+		FIGURINE = Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, PantheonMod.id("figurine"),
+				DataComponentType.<FigurineData>builder()
+						.persistent(FigurineData.CODEC)
+						.networkSynchronized(FigurineData.STREAM_CODEC)
+						.build());
+
 		PEDESTAL_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, PantheonMod.id("pedestal"),
 				FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new, PEDESTAL).build());
 
@@ -156,6 +173,7 @@ public final class PantheonContent {
 							entries.accept(BLANK_SEAL);
 							entries.accept(NAME_SCROLL);
 							entries.accept(SUBSCRIBER_FIGURINE);
+							entries.accept(ATTIC_CHISEL);
 						})
 						.build());
 	}
