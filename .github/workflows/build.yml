@@ -191,6 +191,13 @@ jobs:
             echo "=== LivingEntity slots ==="; javap -classpath "$jar" net.minecraft.world.entity.LivingEntity | grep -E "setItemSlot|getItemSlot"
             echo "=== ServerPlayer ==="; javap -classpath "$jar" net.minecraft.server.level.ServerPlayer | grep -E "isSpectator|isCreative|getUUID|sendSystemMessage"
             echo "=== BlockPos ==="; javap -classpath "$jar" net.minecraft.core.BlockPos | grep -E "getX|getY|getZ|offset|closerThan"
+            echo "=== EntitySpawnReason ==="; javap -classpath "$jar" net.minecraft.world.entity.EntitySpawnReason | grep -E "public static final net.minecraft.world.entity.EntitySpawnReason"
+            echo "=== EntitySpawnRequest ==="; javap -classpath "$jar" net.minecraft.world.entity.EntitySpawnRequest | head -20
+            echo "=== Wolf ctor ==="; javap -classpath "$jar" net.minecraft.world.entity.animal.wolf.Wolf | grep -E "Wolf\(|class "
+            echo "=== LevelAccessor gameTime ==="; javap -classpath "$jar" net.minecraft.world.level.LevelAccessor | grep -iE "gametime"
+            echo "=== ParticleTypes ==="; javap -classpath "$jar" net.minecraft.core.particles.ParticleTypes | grep -E "POOF|END_ROD"
+            echo "=== SoundSource ==="; javap -classpath "$jar" net.minecraft.sounds.SoundSource | grep -E "NEUTRAL|class "
+            echo "=== Player spec/creative ==="; javap -classpath "$jar" net.minecraft.world.entity.player.Player | grep -E "isSpectator|isCreative"
           } > api-dump.txt 2>&1
           wc -l api-dump.txt
       - name: upload api dump
