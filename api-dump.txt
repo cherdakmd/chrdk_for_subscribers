@@ -131,3 +131,48 @@ public final class net.minecraft.world.level.levelgen.Heightmap$Types extends ja
   public net.minecraft.core.BlockPos offset(net.minecraft.core.Vec3i);
   public net.minecraft.core.Vec3i offset(net.minecraft.core.Vec3i);
   public net.minecraft.core.Vec3i offset(int, int, int);
+=== EntitySpawnReason ===
+  public static final net.minecraft.world.entity.EntitySpawnReason NATURAL;
+  public static final net.minecraft.world.entity.EntitySpawnReason CHUNK_GENERATION;
+  public static final net.minecraft.world.entity.EntitySpawnReason SPAWNER;
+  public static final net.minecraft.world.entity.EntitySpawnReason STRUCTURE;
+  public static final net.minecraft.world.entity.EntitySpawnReason BREEDING;
+  public static final net.minecraft.world.entity.EntitySpawnReason MOB_SUMMONED;
+  public static final net.minecraft.world.entity.EntitySpawnReason JOCKEY;
+  public static final net.minecraft.world.entity.EntitySpawnReason EVENT;
+  public static final net.minecraft.world.entity.EntitySpawnReason CONVERSION;
+  public static final net.minecraft.world.entity.EntitySpawnReason REINFORCEMENT;
+  public static final net.minecraft.world.entity.EntitySpawnReason TRIGGERED;
+  public static final net.minecraft.world.entity.EntitySpawnReason BUCKET;
+  public static final net.minecraft.world.entity.EntitySpawnReason SPAWN_ITEM_USE;
+  public static final net.minecraft.world.entity.EntitySpawnReason COMMAND;
+  public static final net.minecraft.world.entity.EntitySpawnReason DISPENSER;
+  public static final net.minecraft.world.entity.EntitySpawnReason PATROL;
+  public static final net.minecraft.world.entity.EntitySpawnReason TRIAL_SPAWNER;
+  public static final net.minecraft.world.entity.EntitySpawnReason LOAD;
+  public static final net.minecraft.world.entity.EntitySpawnReason DIMENSION_TRAVEL;
+=== EntitySpawnRequest ===
+Compiled from "EntitySpawnRequest.java"
+public final class net.minecraft.world.entity.EntitySpawnRequest extends java.lang.Record {
+  public net.minecraft.world.entity.EntitySpawnRequest(net.minecraft.world.entity.EntitySpawnReason, boolean);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.entity.EntitySpawnReason reason();
+  public boolean ignoreChecks();
+}
+=== Wolf ctor ===
+public class net.minecraft.world.entity.animal.wolf.Wolf extends net.minecraft.world.entity.TamableAnimal implements net.minecraft.world.entity.NeutralMob {
+  public net.minecraft.world.entity.animal.wolf.Wolf(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.animal.wolf.Wolf>, net.minecraft.world.level.Level);
+=== LevelAccessor gameTime ===
+  public default long getGameTime();
+=== ParticleTypes ===
+  public static final net.minecraft.core.particles.ParticleType<net.minecraft.core.particles.GeyserBaseParticleOptions> GEYSER_POOF;
+  public static final net.minecraft.core.particles.SimpleParticleType END_ROD;
+  public static final net.minecraft.core.particles.SimpleParticleType POOF;
+=== SoundSource ===
+public final class net.minecraft.sounds.SoundSource extends java.lang.Enum<net.minecraft.sounds.SoundSource> {
+  public static final net.minecraft.sounds.SoundSource NEUTRAL;
+=== Player spec/creative ===
+  public boolean isSpectator();
+  public boolean isCreative();
