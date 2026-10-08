@@ -158,7 +158,14 @@ jobs:
             'net.minecraft.world.level.storage.ValueOutput$TypedOutputList' \
             net.minecraft.world.ContainerHelper \
             net.minecraft.world.level.block.entity.ChestBlockEntity \
-            net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity ; do
+            net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity \
+            net.minecraft.world.item.crafting.Recipe \
+            net.minecraft.world.item.crafting.CustomRecipe \
+            net.minecraft.world.item.crafting.CraftingInput \
+            net.minecraft.world.item.crafting.RecipeSerializer \
+            net.minecraft.world.item.crafting.RecipeType \
+            net.minecraft.world.item.crafting.Ingredient \
+            net.minecraft.world.item.crafting.CraftingBookCategory ; do
             name=$(echo "$cls" | tr '.' '_' | tr '$' '_')
             {
               echo "### $cls"
