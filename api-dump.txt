@@ -1,0 +1,133 @@
+=== DyedItemColor ===
+Compiled from "DyedItemColor.java"
+public final class net.minecraft.world.item.component.DyedItemColor extends java.lang.Record implements net.minecraft.world.item.component.TooltipProvider {
+  public static final com.mojang.serialization.Codec<net.minecraft.world.item.component.DyedItemColor> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.item.component.DyedItemColor> STREAM_CODEC;
+  public static final int LEATHER_COLOR;
+  public net.minecraft.world.item.component.DyedItemColor(int);
+  public static int getOrDefault(net.minecraft.world.item.ItemStack, int);
+  public static net.minecraft.world.item.ItemStack applyDyes(net.minecraft.world.item.ItemStack, java.util.List<net.minecraft.world.item.DyeColor>);
+  public static net.minecraft.world.item.component.DyedItemColor applyDyes(net.minecraft.world.item.component.DyedItemColor, java.util.List<net.minecraft.world.item.DyeColor>);
+  public void addToTooltip(net.minecraft.world.item.Item$TooltipContext, java.util.function.Consumer<net.minecraft.network.chat.Component>, net.minecraft.world.item.TooltipFlag, net.minecraft.core.component.DataComponentGetter);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public int rgb();
+  static {};
+}
+=== EntityTypes WOLF ===
+public class net.minecraft.world.entity.EntityTypes {
+  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.animal.wolf.Wolf> WOLF;
+=== EntityType create/spawn ===
+  public T spawn(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack, net.minecraft.world.entity.LivingEntity, net.minecraft.core.BlockPos, net.minecraft.world.entity.EntitySpawnReason, boolean, boolean);
+  public static <T extends net.minecraft.world.entity.Entity> net.minecraft.world.entity.PostSpawnProcessor<T> createDefaultStackConfig(net.minecraft.world.level.Level, net.minecraft.world.item.ItemStack, net.minecraft.world.entity.LivingEntity);
+  public T spawn(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos, net.minecraft.world.entity.EntitySpawnReason);
+  public T spawn(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.PostSpawnProcessor<T>, net.minecraft.core.BlockPos, net.minecraft.world.entity.EntitySpawnReason, boolean, boolean);
+  public T create(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.PostSpawnProcessor<T>, net.minecraft.core.BlockPos, net.minecraft.world.entity.EntitySpawnReason, boolean, boolean);
+  public T create(net.minecraft.world.level.Level, net.minecraft.world.entity.EntitySpawnReason);
+  public T create(net.minecraft.world.level.Level, net.minecraft.world.entity.EntitySpawnRequest);
+  public static java.util.Optional<net.minecraft.world.entity.Entity> create(net.minecraft.world.level.storage.ValueInput, net.minecraft.world.level.Level, net.minecraft.world.entity.EntitySpawnRequest);
+  public static java.util.Optional<net.minecraft.world.entity.Entity> create(net.minecraft.world.entity.EntityType<?>, net.minecraft.world.level.storage.ValueInput, net.minecraft.world.level.Level, net.minecraft.world.entity.EntitySpawnReason);
+=== Entity movement/misc ===
+  public int getId();
+  public boolean addTag(java.lang.String);
+  public final void discard();
+  public void setPose(net.minecraft.world.entity.Pose);
+  public final void setPos(net.minecraft.world.phys.Vec3);
+  public void setPos(double, double, double);
+  public void snapTo(net.minecraft.world.phys.Vec3);
+  public void snapTo(double, double, double);
+  public void snapTo(net.minecraft.core.BlockPos, float, float);
+  public void snapTo(net.minecraft.world.phys.Vec3, float, float);
+  public void snapTo(double, double, double, float, float);
+  public float getYRot(float);
+  public boolean isAlive();
+  public void teleportToPortalDestination(net.minecraft.server.level.ServerLevel, net.minecraft.world.level.portal.TeleportTransition);
+  protected void moveTowardsClosestSpace(double, double, double);
+  public net.minecraft.world.entity.Entity teleport(net.minecraft.world.level.portal.TeleportTransition);
+  protected void teleportSpectators(net.minecraft.world.level.portal.TeleportTransition, net.minecraft.server.level.ServerLevel);
+  public void teleportSetPosition(net.minecraft.world.entity.PositionMoveRotation, java.util.Set<net.minecraft.world.entity.Relative>);
+  public void teleportSetPosition(net.minecraft.world.entity.PositionMoveRotation, net.minecraft.world.entity.PositionMoveRotation, java.util.Set<net.minecraft.world.entity.Relative>);
+  public java.util.UUID getUUID();
+  public void setCustomName(net.minecraft.network.chat.Component);
+  public void setCustomNameVisible(boolean);
+  public boolean teleportTo(net.minecraft.server.level.ServerLevel, double, double, double, java.util.Set<net.minecraft.world.entity.Relative>, float, float, boolean);
+  public void teleportTo(double, double, double);
+  public void teleportRelative(double, double, double);
+  public net.minecraft.core.BlockPos blockPosition();
+  public final void setPosRaw(double, double, double);
+  public float getYRot();
+  public void setYRot(float);
+=== TamableAnimal ===
+public abstract class net.minecraft.world.entity.TamableAnimal extends net.minecraft.world.entity.animal.Animal implements net.minecraft.world.entity.OwnableEntity {
+  public void tame(net.minecraft.world.entity.player.Player);
+=== SoundEvents ===
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_CHAIN;
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_DIAMOND;
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_ELYTRA;
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_GENERIC;
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_GOLD;
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_IRON;
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_LEATHER;
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_COPPER;
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_NETHERITE;
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_TURTLE;
+  public static final net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_WOLF;
+  public static final net.minecraft.sounds.SoundEvent ARMOR_UNEQUIP_WOLF;
+  public static final net.minecraft.core.Holder$Reference<net.minecraft.sounds.SoundEvent> ARMOR_EQUIP_NAUTILUS;
+  public static final net.minecraft.sounds.SoundEvent BELL_BLOCK;
+  public static final net.minecraft.sounds.SoundEvent FIRE_EXTINGUISH;
+  public static final net.minecraft.core.Holder$Reference<net.minecraft.sounds.SoundEvent> WOLF_ARMOR_BREAK;
+  public static final net.minecraft.core.Holder$Reference<net.minecraft.sounds.SoundEvent> WOLF_AMBIENT_BABY;
+  public static final net.minecraft.sounds.SoundEvent WOLF_ARMOR_CRACK;
+  public static final net.minecraft.sounds.SoundEvent WOLF_ARMOR_DAMAGE;
+  public static final net.minecraft.sounds.SoundEvent WOLF_ARMOR_REPAIR;
+  public static final net.minecraft.core.Holder$Reference<net.minecraft.sounds.SoundEvent> WOLF_DEATH_BABY;
+  public static final net.minecraft.core.Holder$Reference<net.minecraft.sounds.SoundEvent> WOLF_GROWL_BABY;
+  public static final net.minecraft.core.Holder$Reference<net.minecraft.sounds.SoundEvent> WOLF_HURT_BABY;
+  public static final net.minecraft.core.Holder$Reference<net.minecraft.sounds.SoundEvent> WOLF_PANT_BABY;
+  public static final net.minecraft.sounds.SoundEvent WOLF_SHAKE;
+  public static final net.minecraft.core.Holder$Reference<net.minecraft.sounds.SoundEvent> WOLF_STEP;
+  public static final net.minecraft.core.Holder$Reference<net.minecraft.sounds.SoundEvent> WOLF_STEP_BABY;
+  public static final net.minecraft.core.Holder$Reference<net.minecraft.sounds.SoundEvent> WOLF_WHINE_BABY;
+  public static final java.util.Map<net.minecraft.world.entity.animal.wolf.WolfSoundVariants$SoundSet, net.minecraft.world.entity.animal.wolf.WolfSoundVariant> WOLF_SOUNDS;
+=== EquipmentSlot ===
+public final class net.minecraft.world.entity.EquipmentSlot extends java.lang.Enum<net.minecraft.world.entity.EquipmentSlot> implements net.minecraft.util.StringRepresentable {
+  public static final net.minecraft.world.entity.EquipmentSlot BODY;
+=== Items WOLF_ARMOR ===
+  public static final net.minecraft.world.item.Item WOLF_ARMOR;
+=== Level ===
+  protected net.minecraft.world.level.Level(net.minecraft.world.level.storage.WritableLevelData, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, net.minecraft.core.RegistryAccess, net.minecraft.core.Holder<net.minecraft.world.level.dimension.DimensionType>, boolean, boolean, long, int);
+  public void playSound(net.minecraft.world.entity.Entity, net.minecraft.core.BlockPos, net.minecraft.sounds.SoundEvent, net.minecraft.sounds.SoundSource, float, float);
+  public void playSound(net.minecraft.world.entity.Entity, double, double, double, net.minecraft.sounds.SoundEvent, net.minecraft.sounds.SoundSource);
+  public void playSound(net.minecraft.world.entity.Entity, double, double, double, net.minecraft.sounds.SoundEvent, net.minecraft.sounds.SoundSource, float, float);
+  public void playSound(net.minecraft.world.entity.Entity, double, double, double, net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent>, net.minecraft.sounds.SoundSource, float, float);
+  public void playSound(net.minecraft.world.entity.Entity, net.minecraft.world.entity.Entity, net.minecraft.sounds.SoundEvent, net.minecraft.sounds.SoundSource, float, float);
+  public void playSound(net.minecraft.world.entity.Entity, net.minecraft.world.entity.Entity, net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent>, net.minecraft.sounds.SoundSource, float, float);
+  public net.minecraft.world.level.dimension.DimensionType dimensionType();
+  public net.minecraft.core.Holder<net.minecraft.world.level.dimension.DimensionType> dimensionTypeRegistration();
+  public net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dimension();
+  public net.minecraft.util.RandomSource getRandom();
+=== LevelReader ===
+  public abstract int getHeight(net.minecraft.world.level.levelgen.Heightmap$Types, int, int);
+  public default int getHeight(net.minecraft.world.level.levelgen.Heightmap$Types, net.minecraft.core.BlockPos);
+  public default net.minecraft.core.BlockPos getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap$Types, net.minecraft.core.BlockPos);
+=== Heightmap.Types ===
+public final class net.minecraft.world.level.levelgen.Heightmap$Types extends java.lang.Enum<net.minecraft.world.level.levelgen.Heightmap$Types> implements net.minecraft.util.StringRepresentable {
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types MOTION_BLOCKING;
+  public static final net.minecraft.world.level.levelgen.Heightmap$Types MOTION_BLOCKING_NO_LEAVES;
+=== LivingEntity slots ===
+  public void setItemSlot(net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack);
+=== ServerPlayer ===
+  public void sendSystemMessage(net.minecraft.network.chat.Component);
+  public void sendSystemMessage(net.minecraft.network.chat.Component, boolean);
+=== BlockPos ===
+  public static long offset(long, net.minecraft.core.Direction);
+  public static long offset(long, int, int, int);
+  public static int getX(long);
+  public static int getY(long);
+  public static int getZ(long);
+  public net.minecraft.core.BlockPos offset(int, int, int);
+  public net.minecraft.core.BlockPos offset(net.minecraft.core.Vec3i);
+  public net.minecraft.core.Vec3i offset(net.minecraft.core.Vec3i);
+  public net.minecraft.core.Vec3i offset(int, int, int);
