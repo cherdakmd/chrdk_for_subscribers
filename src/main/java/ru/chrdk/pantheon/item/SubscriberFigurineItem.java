@@ -15,7 +15,7 @@ public class SubscriberFigurineItem extends Item {
 	}
 
 	public static ItemStack named(String nick, int tier) {
-		ItemStack figurine = new ItemStack(PantheonContent.SUBSCRIBER_FIGURINE, 1);
+		ItemStack figurine = new ItemStack(PantheonContent.SUBSCRIBER_FIGURINE);
 		figurine.set(DataComponents.CUSTOM_NAME,
 				Component.literal("Фигурка " + nick).withStyle(ChatFormatting.GOLD));
 		figurine.set(DataComponents.LORE,
@@ -26,7 +26,7 @@ public class SubscriberFigurineItem extends Item {
 	}
 
 	public static String nameOf(ItemStack stack) {
-		if (stack.isEmpty() || !stack.getItem() != PantheonContent.SUBSCRIBER_FIGURINE
+		if (stack.isEmpty() || stack.getItem() != PantheonContent.SUBSCRIBER_FIGURINE
 				|| !stack.has(DataComponents.CUSTOM_NAME)) {
 			return null;
 		}
