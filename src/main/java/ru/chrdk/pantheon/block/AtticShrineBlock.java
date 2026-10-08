@@ -27,6 +27,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import ru.chrdk.pantheon.data.Milestones;
 import ru.chrdk.pantheon.data.PantheonData;
+import ru.chrdk.pantheon.item.SubscriberFigurineItem;
 import ru.chrdk.pantheon.data.Subscriber;
 import ru.chrdk.pantheon.gameplay.Offerings;
 import ru.chrdk.pantheon.item.Seals;
@@ -196,7 +197,7 @@ public abstract class AtticShrineBlock extends BaseEntityBlock {
 			return;
 		}
 
-		player.getInventory().placeItemBackInInventory(Seals.named(nick), Prediction.SERVER_ONLY);
+		player.getInventory().placeItemBackInInventory(SubscriberFigurineItem.named(nick, shrine.getTier()), Prediction.SERVER_ONLY);
 		level.playSound(null, pos, SoundEvents.ANVIL_HIT, SoundSource.BLOCKS, 0.8F, 0.8F);
 		player.sendSystemMessage(onReleased(nick).copy().withStyle(ChatFormatting.GRAY));
 	}

@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
 import ru.chrdk.pantheon.registry.PantheonContent;
+import ru.chrdk.pantheon.item.SubscriberFigurineItem;
 
 /**
  * Печать — «чернильница» ритуала. Пустая печать бесполезна, но если переименовать её
@@ -25,11 +26,11 @@ public final class Seals {
 
 	/** Имя с печати или null, если печать пустая. */
 	public static String nameOf(ItemStack stack) {
-		if (stack.isEmpty() || !stack.is(PantheonContent.BLANK_SEAL)) {
-			return null;
+		if (stack.isEmpty()) return null;
+		if (stack.getItem() == PantheonContent.SUBSCRIBER_FIGURINE) {
+			return SubscriberFigurineItem.nameOf(stack);
 		}
-
-		if (!stack.has(DataComponents.CUSTOM_NAME)) {
+		if (stack.getItem() != PantheonContent.BLANK_SEAL || !stack.has(DataComponents.CUSTOM_NAME)) {
 			return null;
 		}
 
