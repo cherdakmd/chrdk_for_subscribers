@@ -20,9 +20,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
@@ -104,7 +105,7 @@ public final class GuardianService {
 			level.sendParticles(ParticleTypes.POOF,
 					pos.getX() + 0.5D, pos.getY() + 0.6D, pos.getZ() + 0.5D,
 					10, 0.3D, 0.3D, 0.3D, 0.01D);
-			level.playSound(null, pos, SoundEvents.WOLF_WHINE, SoundSource.NEUTRAL, 0.8F, 1.2F);
+			level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.NEUTRAL, 0.8F, 1.2F);
 			broadcast(level, pos, "Хранитель " + guardian.nick() + " вернулся на полку.", ChatFormatting.GRAY);
 			iterator.remove();
 		}
@@ -169,15 +170,15 @@ public final class GuardianService {
 
 	/** Призывает одного Хранителя рядом с игроком. */
 	private static boolean spawn(ServerLevel level, ServerPlayer player, Subscriber subscriber) {
-		Entity entity = EntityType.WOLF.create(level);
+		Wolf wolf = EntityTypes.WOLF.create(level, EntitySpawnReason.MOB_SUMMONED);
 
-		if (!(entity instanceof TamableAnimal wolf)) {
+		if (wolf == null) {
 			return false;
 		}
 
 		BlockPos pos = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				player.blockPosition().offset(level.random.nextInt(7) - 3, 0, level.random.nextInt(7) - 3));
-		wolf.moveTo(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, player.getYRot(), 0.0F);
+				player.blockPosition().offset(level.getRandom().nextInt(7) - 3, 0, level.getRandom().nextInt(7) - 3));
+		wolf.snapTo(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, player.getYRot(), 0.0F);
 		wolf.tame(player);
 		wolf.setCustomName(Component.literal("Хранитель " + subscriber.name()).withStyle(ChatFormatting.GOLD));
 		wolf.setCustomNameVisible(true);
@@ -191,7 +192,8 @@ public final class GuardianService {
 		GUARDIANS.put(wolf.getId(), new Guardian(wolf.getId(), subscriber.name(), subscriber.tier(),
 				level.getGameTime(), player.getUUID(), level.dimension()));
 
-		level.playSound(null, pos, SoundEvents.ARMOR_EQUIP_WOLF, SoundSource.NEUTRAL, 0.9F, 1.1F);
+		level.playSound(null, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
+				SoundEvents.ARMOR_EQUIP_WOLF, SoundSource.NEUTRAL, 0.9F, 1.1F);
 		level.sendParticles(ParticleTypes.END_ROD,
 				pos.getX() + 0.5D, pos.getY() + 0.8D, pos.getZ() + 0.5D,
 				10, 0.3D, 0.3D, 0.3D, 0.02D);
@@ -211,7 +213,7 @@ public final class GuardianService {
 		};
 
 		ItemStack armor = new ItemStack(Items.WOLF_ARMOR);
-		armor.set(DataComponents.DYED_COLOR, new DyedItemColor(rgb, false));
+		armor.set(DataComponents.DYED_COLOR, new DyedItemColor(rgb));
 		return armor;
 	}
 
