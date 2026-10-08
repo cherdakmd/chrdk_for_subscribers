@@ -1,0 +1,25 @@
+### net.minecraft.world.item.crafting.Ingredient
+Compiled from "Ingredient.java"
+public final class net.minecraft.world.item.crafting.Ingredient implements java.util.function.Predicate<net.minecraft.world.item.ItemStack>, net.minecraft.world.entity.player.StackedContents$IngredientInfo<net.minecraft.core.Holder<net.minecraft.world.item.Item>> {
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, net.minecraft.world.item.crafting.Ingredient> CONTENTS_STREAM_CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, java.util.Optional<net.minecraft.world.item.crafting.Ingredient>> OPTIONAL_CONTENTS_STREAM_CODEC;
+  public static final com.mojang.serialization.Codec<net.minecraft.core.HolderSet<net.minecraft.world.item.Item>> NON_AIR_HOLDER_SET_CODEC;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.item.crafting.Ingredient> CODEC;
+  public static boolean testOptionalIngredient(java.util.Optional<net.minecraft.world.item.crafting.Ingredient>, net.minecraft.world.item.ItemStack);
+  public java.util.stream.Stream<net.minecraft.core.Holder<net.minecraft.world.item.Item>> items();
+  public boolean isEmpty();
+  public boolean test(net.minecraft.world.item.ItemStack);
+  public boolean acceptsItem(net.minecraft.core.Holder<net.minecraft.world.item.Item>);
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public static net.minecraft.world.item.crafting.Ingredient of(net.minecraft.world.level.ItemLike);
+  public static net.minecraft.world.item.crafting.Ingredient of(net.minecraft.world.level.ItemLike...);
+  public static net.minecraft.world.item.crafting.Ingredient of(java.util.stream.Stream<? extends net.minecraft.world.level.ItemLike>);
+  public static net.minecraft.world.item.crafting.Ingredient of(net.minecraft.core.HolderSet<net.minecraft.world.item.Item>);
+  public net.minecraft.world.item.crafting.display.SlotDisplay display();
+  public static net.minecraft.world.item.crafting.display.SlotDisplay optionalIngredientToDisplay(java.util.Optional<net.minecraft.world.item.crafting.Ingredient>);
+  public java.util.Optional<net.minecraft.core.Holder<net.minecraft.world.item.Item>> getSingleItem();
+  public boolean test(java.lang.Object);
+  public boolean acceptsItem(java.lang.Object);
+  static {};
+}
