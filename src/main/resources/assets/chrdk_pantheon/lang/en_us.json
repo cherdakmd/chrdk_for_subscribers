@@ -11,5 +11,6 @@
 	"block.chrdk_pantheon.attic_dust": "Age-old Dust",
 	"block.chrdk_pantheon.attic_web": "Attic Cobweb",
 	"block.chrdk_pantheon.attic_glass": "Attic Stained Glass",
-	"container.chrdk_pantheon.subscriber_chest": "Subscriber Chest"
+	"container.chrdk_pantheon.subscriber_chest": "Subscriber Chest",
+	"item.chrdk_pantheon.subscriber_figurine": "Subscriber Figurine"
 }

@@ -11,5 +11,6 @@
 	"block.chrdk_pantheon.attic_dust": "Вековая пыль",
 	"block.chrdk_pantheon.attic_web": "Чердачная паутина",
 	"block.chrdk_pantheon.attic_glass": "Витраж чердака",
-	"container.chrdk_pantheon.subscriber_chest": "Сундук подписчика"
+	"container.chrdk_pantheon.subscriber_chest": "Сундук подписчика",
+	"item.chrdk_pantheon.subscriber_figurine": "Фигурка подписчика"
 }

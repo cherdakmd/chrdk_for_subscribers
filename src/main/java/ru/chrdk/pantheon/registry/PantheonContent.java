@@ -33,6 +33,7 @@ import ru.chrdk.pantheon.block.PortraitBlockEntity;
 import ru.chrdk.pantheon.block.SubscriberChestBlock;
 import ru.chrdk.pantheon.block.SubscriberChestBlockEntity;
 import ru.chrdk.pantheon.item.NameScrollItem;
+import ru.chrdk.pantheon.item.SubscriberFigurineItem;
 
 /** Всё, что мод добавляет в игру: блоки, предметы, сущности блоков и вкладка креатива. */
 public final class PantheonContent {
@@ -56,6 +57,7 @@ public final class PantheonContent {
 	public static final ResourceKey<Item> ATTIC_GLASS_ITEM_KEY = itemKey("attic_glass");
 	public static final ResourceKey<Item> BLANK_SEAL_KEY = itemKey("blank_seal");
 	public static final ResourceKey<Item> NAME_SCROLL_KEY = itemKey("name_scroll");
+	public static final ResourceKey<Item> SUBSCRIBER_FIGURINE_KEY = itemKey("subscriber_figurine");
 	public static final ResourceKey<CreativeModeTab> ATTIC_TAB_KEY = ResourceKey.create(Registries.CREATIVE_MODE_TAB, PantheonMod.id("attic"));
 
 	public static Block ATTIC_ALTAR;
@@ -78,6 +80,7 @@ public final class PantheonContent {
 	public static Item ATTIC_GLASS_ITEM;
 	public static Item BLANK_SEAL;
 	public static Item NAME_SCROLL;
+	public static Item SUBSCRIBER_FIGURINE;
 	public static BlockEntityType<PedestalBlockEntity> PEDESTAL_ENTITY;
 	public static BlockEntityType<PortraitBlockEntity> PORTRAIT_ENTITY;
 	public static BlockEntityType<SubscriberChestBlockEntity> SUBSCRIBER_CHEST_ENTITY;
@@ -124,6 +127,8 @@ public final class PantheonContent {
 
 		NAME_SCROLL = Registry.register(BuiltInRegistries.ITEM, NAME_SCROLL_KEY,
 				new NameScrollItem(new Item.Properties().stacksTo(1).setId(NAME_SCROLL_KEY)));
+		SUBSCRIBER_FIGURINE = Registry.register(BuiltInRegistries.ITEM, SUBSCRIBER_FIGURINE_KEY,
+				new SubscriberFigurineItem(new Item.Properties().setId(SUBSCRIBER_FIGURINE_KEY)));
 
 		PEDESTAL_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, PantheonMod.id("pedestal"),
 				FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new, PEDESTAL).build());
@@ -150,6 +155,7 @@ public final class PantheonContent {
 							entries.accept(ATTIC_GLASS_ITEM);
 							entries.accept(BLANK_SEAL);
 							entries.accept(NAME_SCROLL);
+							entries.accept(SUBSCRIBER_FIGURINE);
 						})
 						.build());
 	}
