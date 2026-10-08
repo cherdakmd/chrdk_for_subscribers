@@ -1,0 +1,17 @@
+### net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider$Context
+Compiled from "BlockEntityRendererProvider.java"
+public final class net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider$Context extends java.lang.Record {
+  public net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider$Context(net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher, net.minecraft.client.renderer.block.BlockModelResolver, net.minecraft.client.renderer.item.ItemModelResolver, net.minecraft.client.renderer.entity.EntityRenderDispatcher, net.minecraft.client.model.geom.EntityModelSet, net.minecraft.client.gui.Font, net.minecraft.client.resources.model.sprite.SpriteGetter, net.minecraft.client.renderer.PlayerSkinRenderCache);
+  public net.minecraft.client.model.geom.ModelPart bakeLayer(net.minecraft.client.model.geom.ModelLayerLocation);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher blockEntityRenderDispatcher();
+  public net.minecraft.client.renderer.block.BlockModelResolver blockModelResolver();
+  public net.minecraft.client.renderer.item.ItemModelResolver itemModelResolver();
+  public net.minecraft.client.renderer.entity.EntityRenderDispatcher entityRenderer();
+  public net.minecraft.client.model.geom.EntityModelSet entityModelSet();
+  public net.minecraft.client.gui.Font font();
+  public net.minecraft.client.resources.model.sprite.SpriteGetter sprites();
+  public net.minecraft.client.renderer.PlayerSkinRenderCache playerSkinRenderCache();
+}

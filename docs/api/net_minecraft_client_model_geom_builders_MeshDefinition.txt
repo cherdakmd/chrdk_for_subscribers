@@ -1,0 +1,8 @@
+### net.minecraft.client.model.geom.builders.MeshDefinition
+Compiled from "MeshDefinition.java"
+public class net.minecraft.client.model.geom.builders.MeshDefinition {
+  public net.minecraft.client.model.geom.builders.MeshDefinition();
+  public net.minecraft.client.model.geom.builders.PartDefinition getRoot();
+  public net.minecraft.client.model.geom.builders.MeshDefinition transformed(java.util.function.UnaryOperator<net.minecraft.client.model.geom.PartPose>);
+  public net.minecraft.client.model.geom.builders.MeshDefinition apply(net.minecraft.client.model.geom.builders.MeshTransformer);
+}

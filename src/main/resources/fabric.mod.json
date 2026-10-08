@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "chrdk_pantheon",
+	"version": "${version}",
+	"name": "Чердак Бессмертных",
+	"description": "Увековечивает подписчиков канала в мире выживания: именные печати, постаменты со статуэтками и летопись имён, которая живёт прямо в мире.",
+	"authors": [
+		"cherdakmd"
+	],
+	"contact": {
+		"homepage": "https://github.com/cherdakmd/chrdk_for_subscribers",
+		"sources": "https://github.com/cherdakmd/chrdk_for_subscribers"
+	},
+	"license": "MIT",
+	"icon": "assets/chrdk_pantheon/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"ru.chrdk.pantheon.PantheonMod"
+		],
+		"client": [
+			"ru.chrdk.pantheon.client.PantheonClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

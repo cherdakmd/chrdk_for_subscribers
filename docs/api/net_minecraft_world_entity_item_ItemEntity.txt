@@ -1,0 +1,50 @@
+### net.minecraft.world.entity.item.ItemEntity
+Compiled from "ItemEntity.java"
+public class net.minecraft.world.entity.item.ItemEntity extends net.minecraft.world.entity.Entity implements net.minecraft.world.entity.TraceableEntity {
+  public static final float EYE_HEIGHT;
+  public static final int DEFAULT_HEALTH;
+  public final float bobOffs;
+  public net.minecraft.world.entity.item.ItemEntity(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.item.ItemEntity>, net.minecraft.world.level.Level);
+  public net.minecraft.world.entity.item.ItemEntity(net.minecraft.world.level.Level, double, double, double, net.minecraft.world.item.ItemStack);
+  public net.minecraft.world.entity.item.ItemEntity(net.minecraft.world.level.Level, double, double, double, net.minecraft.world.item.ItemStack, double, double, double);
+  public boolean dampensVibrations();
+  public net.minecraft.world.entity.Entity getOwner();
+  public void restoreFrom(net.minecraft.world.entity.Entity);
+  protected net.minecraft.world.entity.Entity$MovementEmission getMovementEmission();
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+  protected double getDefaultGravity();
+  public void tick();
+  public net.minecraft.core.BlockPos getBlockPosBelowThatAffectsMyMovement();
+  public static boolean areMergable(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack);
+  public static net.minecraft.world.item.ItemStack merge(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack, int);
+  public boolean fireImmune();
+  protected boolean shouldPlayLavaHurtSound();
+  public final boolean hurtClient(net.minecraft.world.damagesource.DamageSource);
+  public final boolean hurtServer(net.minecraft.server.level.ServerLevel, net.minecraft.world.damagesource.DamageSource, float);
+  public boolean ignoreExplosion(net.minecraft.world.level.Explosion);
+  protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput);
+  protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput);
+  public void playerTouch(net.minecraft.world.entity.player.Player);
+  public net.minecraft.network.chat.Component getName();
+  public boolean isAttackable();
+  public net.minecraft.world.entity.Entity teleport(net.minecraft.world.level.portal.TeleportTransition);
+  public net.minecraft.world.item.ItemStack getItem();
+  public void setItem(net.minecraft.world.item.ItemStack);
+  public void setTarget(java.util.UUID);
+  public void setThrower(net.minecraft.world.entity.Entity);
+  public int getAge();
+  public void setDefaultPickUpDelay();
+  public void setNoPickUpDelay();
+  public void setNeverPickUp();
+  public void setPickUpDelay(int);
+  public boolean hasPickUpDelay();
+  public void setUnlimitedLifetime();
+  public void setExtendedLifetime();
+  public void makeFakeItem();
+  public static float getSpin(float, float);
+  public net.minecraft.sounds.SoundSource getSoundSource();
+  public float getVisualRotationYInDegrees();
+  public net.minecraft.world.entity.SlotAccess getSlot(int);
+  public net.minecraft.world.entity.MoveSimulationType getMoveSimulationType();
+  static {};
+}

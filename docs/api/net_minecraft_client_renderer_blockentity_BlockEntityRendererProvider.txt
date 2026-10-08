@@ -1,0 +1,5 @@
+### net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
+Compiled from "BlockEntityRendererProvider.java"
+public interface net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider<T extends net.minecraft.world.level.block.entity.BlockEntity, S extends net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState> {
+  public abstract net.minecraft.client.renderer.blockentity.BlockEntityRenderer<T, S> create(net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider$Context);
+}

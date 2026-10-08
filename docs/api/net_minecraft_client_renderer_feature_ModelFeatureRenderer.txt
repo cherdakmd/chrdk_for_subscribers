@@ -1,0 +1,8 @@
+### net.minecraft.client.renderer.feature.ModelFeatureRenderer
+Compiled from "ModelFeatureRenderer.java"
+public class net.minecraft.client.renderer.feature.ModelFeatureRenderer extends net.minecraft.client.renderer.feature.RenderTypeFeatureRenderer<net.minecraft.client.renderer.feature.ModelFeatureRenderer$Submit<?>> {
+  public static final net.minecraft.client.renderer.feature.FeatureRendererType<net.minecraft.client.renderer.feature.ModelFeatureRenderer$Submit<?>> TYPE;
+  public net.minecraft.client.renderer.feature.ModelFeatureRenderer();
+  protected void buildGroup(net.minecraft.client.renderer.feature.FeatureFrameContext, java.util.List<net.minecraft.client.renderer.feature.ModelFeatureRenderer$Submit<?>>);
+  static {};
+}

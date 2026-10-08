@@ -1,0 +1,6 @@
+### net.minecraft.world.level.block.WebBlock
+Compiled from "WebBlock.java"
+public class net.minecraft.world.level.block.WebBlock extends net.minecraft.world.level.block.Block {
+  public net.minecraft.world.level.block.WebBlock(net.minecraft.world.level.block.state.BlockBehaviour$Properties);
+  protected void entityInside(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity, net.minecraft.world.entity.InsideBlockEffectApplier, boolean);
+}

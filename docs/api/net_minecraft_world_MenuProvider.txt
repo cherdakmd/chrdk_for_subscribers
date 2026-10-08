@@ -1,0 +1,5 @@
+### net.minecraft.world.MenuProvider
+Compiled from "MenuProvider.java"
+public interface net.minecraft.world.MenuProvider extends net.minecraft.world.inventory.MenuConstructor {
+  public abstract net.minecraft.network.chat.Component getDisplayName();
+}

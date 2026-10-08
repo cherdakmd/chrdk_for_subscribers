@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"SSS",
+		"SGS",
+		"SSS"
+	],
+	"key": {
+		"S": "minecraft:stone_bricks",
+		"G": "minecraft:gold_ingot"
+	},
+	"result": {
+		"id": "chrdk_pantheon:pedestal",
+		"count": 1
+	}
+}

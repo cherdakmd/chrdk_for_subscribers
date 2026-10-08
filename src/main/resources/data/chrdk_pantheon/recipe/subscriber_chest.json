@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"PPP",
+		"PSP",
+		"PPP"
+	],
+	"key": {
+		"P": "#minecraft:planks",
+		"S": "chrdk_pantheon:blank_seal"
+	},
+	"result": {
+		"id": "chrdk_pantheon:subscriber_chest",
+		"count": 1
+	}
+}

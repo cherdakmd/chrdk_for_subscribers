@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"CCC",
+		" G "
+	],
+	"key": {
+		"C": "minecraft:candle",
+		"G": "minecraft:gold_ingot"
+	},
+	"result": {
+		"id": "chrdk_pantheon:candelabra",
+		"count": 1
+	}
+}

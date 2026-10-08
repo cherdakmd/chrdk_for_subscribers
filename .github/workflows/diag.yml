@@ -1,0 +1,202 @@
+# Диагностика: снимает точные сигнатуры классов Minecraft 26.3 (javap) и коммитит их в docs/api.
+# Нужна, потому что рабочая среда без JDK не может посмотреть сигнатуры напрямую.
+#
+# Запускается только при изменении самого этого файла (или вручную), чтобы не плодить коммиты.
+
+name: diag
+
+on:
+  push:
+    paths:
+      - '.github/workflows/diag.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  dump:
+    if: "github.ref_type == 'branch' && !contains(github.event.head_commit.message, '[api-dump]')"
+    runs-on: ubuntu-24.04
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v6
+      - name: setup jdk
+        uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+      - name: make gradle wrapper executable
+        run: chmod +x ./gradlew
+      - name: build (может упасть — нужен только скачанный Minecraft)
+        run: ./gradlew compileJava compileClientJava --no-daemon || true
+      - name: найти jar Minecraft
+        run: |
+          # Собираем classpath из всех jar'ов кэша, кроме sources/javadoc — так javap точно найдёт классы.
+          CP=$(find ~/.gradle/caches -name '*.jar' ! -name '*sources*' ! -name '*javadoc*' | tr '\n' ':')
+          echo "MINECRAFT_CP=$CP" >> "$GITHUB_ENV"
+          echo "jar'ов в classpath: $(echo "$CP" | tr ':' '\n' | grep -c jar)"
+          find ~/.gradle/caches -name "minecraft-merged*.jar" | head -5
+      - name: список книжных классов в jar
+        run: |
+          mkdir -p docs/api
+          {
+            echo "### классы, содержащие Book/Written/Filterable/ItemStack"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              echo "--- $jar"
+              unzip -l "$jar" | grep -oE "net/minecraft/[A-Za-z0-9_/$]*(Book|Written|Filterable|ItemStack|Lore)[A-Za-z0-9_$]*\.class" | sort -u | head -60
+            done
+          } > docs/api/_class_index.txt
+          cat docs/api/_class_index.txt | head -60
+      - name: как ваниль назначает тип отрисовки (смотрим модели стекла и паутины)
+        run: |
+          {
+            echo "### assets/minecraft/models/block/cobweb.json"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/cobweb.json 2>/dev/null && break
+            done
+            echo
+            echo "### assets/minecraft/models/block/glass.json"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/glass.json 2>/dev/null && break
+            done
+            echo
+            echo "### assets/minecraft/models/block/cut_copper_stairs.json (образец обычной модели)"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/cut_copper_stairs.json 2>/dev/null && break
+            done
+            echo
+            echo "### assets/minecraft/models/block/white_carpet.json"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/white_carpet.json 2>/dev/null && break
+            done
+            echo
+            echo "### assets/minecraft/models/block/carpet.json"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/carpet.json 2>/dev/null && break
+            done
+            echo
+            echo "### assets/minecraft/models/block/chest.json"
+            for jar in $(find ~/.gradle/caches -name "minecraft*.jar" ! -name '*sources*'); do
+              unzip -p "$jar" assets/minecraft/models/block/chest.json 2>/dev/null && break
+            done
+          } > docs/api/_vanilla_models.txt
+          cat docs/api/_vanilla_models.txt
+
+      - name: снять сигнатуры
+        run: |
+          rm -f docs/api/net_*.txt docs/api/com_*.txt
+          for cls in \
+            net.minecraft.client.renderer.OrderedSubmitNodeCollector \
+            net.minecraft.client.renderer.feature.ModelFeatureRenderer \
+            net.minecraft.client.renderer.blockentity.BlockEntityRenderer \
+            net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider \
+            'net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider$Context' \
+            net.minecraft.client.renderer.state.level.CameraRenderState \
+            net.minecraft.client.renderer.texture.OverlayTexture \
+            net.minecraft.client.renderer.PlayerSkinRenderCache \
+            'net.minecraft.client.renderer.PlayerSkinRenderCache$RenderInfo' \
+            net.minecraft.world.entity.player.PlayerSkin \
+            net.minecraft.world.entity.player.PlayerModelType \
+            net.minecraft.client.model.geom.ModelLayerLocation \
+            net.minecraft.client.model.geom.builders.LayerDefinition \
+            net.minecraft.client.model.geom.builders.MeshDefinition \
+            net.minecraft.client.model.geom.builders.PartDefinition \
+            net.minecraft.client.model.geom.builders.CubeListBuilder \
+            net.minecraft.client.model.geom.builders.PartPose \
+            net.minecraft.client.model.geom.builders.CubeDeformation \
+            net.minecraft.client.model.player.PlayerModel \
+            net.minecraft.client.model.HumanoidModel \
+            net.minecraft.util.Mth \
+            net.minecraft.world.item.component.WrittenBookContent \
+            net.minecraft.world.item.component.Filterable \
+            net.minecraft.core.component.DataComponents \
+            net.minecraft.world.item.ItemStack \
+            'net.minecraft.world.level.block.state.BlockBehaviour$Properties' \
+            net.minecraft.world.item.component.ItemLore \
+            com.mojang.blaze3d.vertex.PoseStack \
+            net.minecraft.world.effect.MobEffect \
+            net.minecraft.world.effect.MobEffectInstance \
+            net.minecraft.world.effect.MobEffects \
+            net.minecraft.world.entity.LivingEntity \
+            net.minecraft.world.entity.player.Player \
+            net.minecraft.world.entity.player.Inventory \
+            net.minecraft.server.level.ServerPlayer \
+            net.minecraft.server.level.ServerLevel \
+            net.minecraft.server.MinecraftServer \
+            net.minecraft.world.level.Level \
+            net.minecraft.world.entity.item.ItemEntity \
+            net.minecraft.world.item.Item \
+            net.minecraft.world.level.saveddata.SavedData \
+            net.minecraft.world.level.storage.ValueInput \
+            net.minecraft.world.level.storage.ValueOutput \
+            net.minecraft.core.BlockPos \
+            net.minecraft.core.Holder \
+            net.minecraft.world.Container \
+            net.minecraft.world.SimpleContainer \
+            net.minecraft.world.MenuProvider \
+            net.minecraft.world.level.block.BaseContainerBlock \
+            net.minecraft.world.level.block.entity.BaseContainerBlockEntity \
+            net.minecraft.world.level.block.entity.ContainerOpenersCounter \
+            net.minecraft.world.inventory.ChestMenu \
+            net.minecraft.world.inventory.AbstractContainerMenu \
+            net.minecraft.world.inventory.MenuType \
+            net.minecraft.world.level.block.CarpetBlock \
+            net.minecraft.world.level.block.WoolCarpetBlock \
+            net.minecraft.world.level.block.WebBlock \
+            net.minecraft.world.level.block.TransparentBlock \
+            net.minecraft.world.level.block.HorizontalDirectionalBlock \
+            net.minecraft.network.chat.ClickEvent \
+            'net.minecraft.network.chat.ClickEvent$RunCommand' \
+            'net.minecraft.network.chat.ClickEvent$SuggestCommand' \
+            net.minecraft.network.chat.HoverEvent \
+            net.minecraft.network.chat.Style \
+            net.minecraft.core.NonNullList \
+            'net.minecraft.network.chat.HoverEvent$ShowText' \
+            net.minecraft.client.renderer.ItemBlockRenderTypes \
+            net.minecraft.client.renderer.block.model.BlockModel \
+            'net.minecraft.world.level.storage.ValueInput$TypedInputList' \
+            'net.minecraft.world.level.storage.ValueOutput$TypedOutputList' \
+            net.minecraft.world.ContainerHelper \
+            net.minecraft.world.level.block.entity.ChestBlockEntity \
+            net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity \
+            net.minecraft.world.item.crafting.Recipe \
+            net.minecraft.world.item.crafting.CustomRecipe \
+            net.minecraft.world.item.crafting.CraftingInput \
+            net.minecraft.world.item.crafting.RecipeSerializer \
+            net.minecraft.world.item.crafting.RecipeType \
+            net.minecraft.world.item.crafting.Ingredient \
+            net.minecraft.world.item.crafting.CraftingBookCategory ; do
+            name=$(echo "$cls" | tr '.' '_' | tr '$' '_')
+            {
+              echo "### $cls"
+              javap -cp "$MINECRAFT_CP" "$cls" 2>&1 || echo "FAILED (класс не найден)"
+            } > "docs/api/$name.txt"
+          done
+          # com.mojang.math.Axis лежит не в самом minecraft.jar — ищем по всем jar'ам кэша
+          {
+            echo "### com.mojang.math.Axis"
+            javap -cp "$MINECRAFT_CP" com.mojang.math.Axis 2>&1 || echo "FAILED (класс не найден)"
+          } > docs/api/com_mojang_math_Axis.txt
+          ls -la docs/api
+      - name: какие константы есть в Blocks (ищем ковёр/паутину/стекло/сундук)
+        run: |
+          javap -cp "$MINECRAFT_CP" net.minecraft.world.level.block.Blocks 2>/dev/null \
+            | grep -iE "CARPET|COBWEB|WEB|GLASS|CHEST" | head -60 > docs/api/_blocks_lookup.txt || true
+          cat docs/api/_blocks_lookup.txt
+
+      - name: лог последней компиляции (первые ошибки)
+        run: |
+          ./gradlew compileJava compileClientJava --no-daemon --continue > /tmp/build.log 2>&1 || true
+          {
+            echo "### вывод javac (хвост)"
+            grep -nE "error:|cannot find symbol|symbol:|location:|required:|found:|^[0-9]+ error" /tmp/build.log | head -80
+          } > docs/api/_last_compile.log
+          cat docs/api/_last_compile.log
+
+      - name: закоммитить дамп
+        run: |
+          git config user.name "chrdk-ci"
+          git config user.email "ci@users.noreply.github.com"
+          git add docs/api
+          git commit -m "ci: дамп сигнатур API 26.3 [api-dump]" || echo "нечего коммитить"
+          git push || echo "push не удался"

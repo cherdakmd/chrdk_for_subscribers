@@ -1,0 +1,50 @@
+### net.minecraft.world.level.block.state.BlockBehaviour$Properties
+Compiled from "BlockBehaviour.java"
+public class net.minecraft.world.level.block.state.BlockBehaviour$Properties {
+  public static net.minecraft.world.level.block.state.BlockBehaviour$Properties of();
+  public static net.minecraft.world.level.block.state.BlockBehaviour$Properties ofFullCopy(net.minecraft.world.level.block.state.BlockBehaviour);
+  public static net.minecraft.world.level.block.state.BlockBehaviour$Properties ofLegacyCopy(net.minecraft.world.level.block.state.BlockBehaviour);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties mapColor(net.minecraft.world.item.DyeColor);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties mapColor(net.minecraft.world.level.material.MapColor);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties mapColor(java.util.function.Function<net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.material.MapColor>);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties noCollision();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties noOcclusion();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties friction(float);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties speedFactor(float);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties jumpFactor(float);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties bounceRestitution(float);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties fallDistanceReduction(float);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties sound(net.minecraft.world.level.block.SoundType);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties lightLevel(java.util.function.ToIntFunction<net.minecraft.world.level.block.state.BlockState>);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties strength(float, float);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties instabreak();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties strength(float);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties randomTicks();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties dynamicShape();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties noLootTable();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties overrideLootTable(java.util.Optional<net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>>);
+  protected java.util.Optional<net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>> effectiveDrops();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties ignitedByLava();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties liquid();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties forceSolidOn();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties forceSolidOff();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties pushReaction(net.minecraft.world.level.material.PushReaction);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties air();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties isValidSpawn(net.minecraft.world.level.block.state.BlockBehaviour$StateArgumentPredicate<net.minecraft.world.entity.EntityType<?>>);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties isRedstoneConductor(net.minecraft.world.level.block.state.BlockBehaviour$StatePredicate);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties isSuffocating(net.minecraft.world.level.block.state.BlockBehaviour$StatePredicate);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties isViewBlocking(net.minecraft.world.level.block.state.BlockBehaviour$StateArgumentPredicate<net.minecraft.world.phys.AABB>);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties postProcess(net.minecraft.world.level.block.state.BlockBehaviour$PostProcess);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties emissiveRendering(java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState>);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties requiresCorrectToolForDrops();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties destroyTime(float);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties explosionResistance(float);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties offsetType(net.minecraft.world.level.block.state.BlockBehaviour$OffsetType);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties noTerrainParticles();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties requiredFeatures(net.minecraft.world.flag.FeatureFlag...);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties instrument(net.minecraft.world.level.block.state.properties.NoteBlockInstrument);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties replaceable();
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties setId(net.minecraft.resources.ResourceKey<net.minecraft.world.level.block.Block>);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties overrideDescription(java.lang.String);
+  protected java.lang.String effectiveDescriptionId();
+}

@@ -1,0 +1,5 @@
+### net.minecraft.client.renderer.block.model.BlockModel
+Compiled from "BlockModel.java"
+public interface net.minecraft.client.renderer.block.model.BlockModel {
+  public abstract void update(net.minecraft.client.renderer.block.BlockModelRenderState, net.minecraft.world.level.block.state.BlockState, net.minecraft.client.renderer.block.model.BlockDisplayContext, long);
+}

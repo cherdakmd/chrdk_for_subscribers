@@ -1,0 +1,13 @@
+  public static final net.minecraft.world.level.block.Block GLASS;
+  public static final net.minecraft.world.level.block.Block COBWEB;
+  public static final net.minecraft.world.level.block.Block CHEST;
+  public static final net.minecraft.world.level.block.ColorCollection<net.minecraft.world.level.block.Block> STAINED_GLASS;
+  public static final net.minecraft.world.level.block.Block GLASS_PANE;
+  public static final net.minecraft.world.level.block.Block ENDER_CHEST;
+  public static final net.minecraft.world.level.block.Block TRAPPED_CHEST;
+  public static final net.minecraft.world.level.block.ColorCollection<net.minecraft.world.level.block.Block> STAINED_GLASS_PANE;
+  public static final net.minecraft.world.level.block.ColorCollection<net.minecraft.world.level.block.Block> CARPET;
+  public static final net.minecraft.world.level.block.Block TINTED_GLASS;
+  public static final net.minecraft.world.level.block.WeatheringCopperCollection<net.minecraft.world.level.block.Block> COPPER_CHEST;
+  public static final net.minecraft.world.level.block.Block MOSS_CARPET;
+  public static final net.minecraft.world.level.block.Block PALE_MOSS_CARPET;

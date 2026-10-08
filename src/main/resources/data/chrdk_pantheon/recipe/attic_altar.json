@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"PLP",
+		"LGL",
+		"PLP"
+	],
+	"key": {
+		"P": "minecraft:oak_planks",
+		"L": "minecraft:oak_log",
+		"G": "minecraft:gold_ingot"
+	},
+	"result": {
+		"id": "chrdk_pantheon:attic_altar",
+		"count": 1
+	}
+}
