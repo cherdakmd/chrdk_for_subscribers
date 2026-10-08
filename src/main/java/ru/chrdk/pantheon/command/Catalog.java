@@ -102,6 +102,9 @@ public final class Catalog {
 				.append(Chat.button("[выдать печать]", "/attic seal " + subscriber.name(),
 						Component.literal("Печать с этим именем — её можно впечатать в постамент или ларь")))
 				.append("  ")
+				.append(Chat.button("[выдать фигурку]", "/attic figurine " + subscriber.name() + " " + subscriber.tier(),
+						Component.literal("Фигурка с этим именем и тиром — водрузить на постамент")))
+				.append("  ")
 				.append(Chat.button(subscriber.active() ? "[потушить]" : "[вернуть в строй]",
 						"/attic toggle " + subscriber.name(),
 						Component.literal(subscriber.active() ? "Отписавшиеся гаснут, но остаются на чердаке"

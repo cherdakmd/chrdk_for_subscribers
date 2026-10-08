@@ -12,5 +12,8 @@
 	"block.chrdk_pantheon.attic_web": "Чердачная паутина",
 	"block.chrdk_pantheon.attic_glass": "Витраж чердака",
 	"container.chrdk_pantheon.subscriber_chest": "Сундук подписчика",
-	"item.chrdk_pantheon.subscriber_figurine": "Фигурка подписчика"
+	"item.chrdk_pantheon.subscriber_figurine": "Фигурка подписчика",
+	"item.chrdk_pantheon.subscriber_figurine.tier": "Тир %s",
+	"item.chrdk_pantheon.subscriber_figurine.unnamed": "Без имени — отлей из именной печати в верстаке",
+	"item.chrdk_pantheon.attic_chisel": "Чердачный резец"
 }

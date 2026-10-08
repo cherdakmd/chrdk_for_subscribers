@@ -32,6 +32,7 @@ import ru.chrdk.pantheon.data.Subscriber;
 import ru.chrdk.pantheon.gameplay.AuraService;
 import ru.chrdk.pantheon.gameplay.AuraTier;
 import ru.chrdk.pantheon.item.Seals;
+import ru.chrdk.pantheon.item.SubscriberFigurineItem;
 import ru.chrdk.pantheon.registry.PantheonContent;
 import ru.chrdk.pantheon.util.Chat;
 import ru.chrdk.pantheon.util.Text;
@@ -73,6 +74,13 @@ public final class PantheonCommands {
 				.then(literal("seal")
 						.then(argument("nick", StringArgumentType.greedyString())
 								.executes(context -> seal(context.getSource(), StringArgumentType.getString(context, "nick")))))
+				.then(literal("figurine")
+						.then(argument("ник", StringArgumentType.greedyString())
+								.executes(context -> figurine(context.getSource(), StringArgumentType.getString(context, "ник"), 1))
+								.then(argument("тир", IntegerArgumentType.integer(1, 5))
+										.executes(context -> figurine(context.getSource(),
+												StringArgumentType.getString(context, "ник"),
+												IntegerArgumentType.getInteger(context, "тир"))))))
 				.then(literal("scroll")
 						.executes(context -> scroll(context.getSource())))
 				.then(literal("book")
@@ -234,6 +242,16 @@ public final class PantheonCommands {
 		return 1;
 	}
 
+	private static int figurine(CommandSourceStack source, String rawNick, int tier) throws CommandSyntaxException {
+		String nick = rawNick.trim();
+		ServerPlayer player = source.getPlayerOrException();
+		player.getInventory().placeItemBackInInventory(SubscriberFigurineItem.named(nick, tier), Prediction.SERVER_ONLY);
+		source.sendSuccess(() -> Component.literal("Фигурка " + nick + " (тир " + tier
+				+ ") у тебя в руках. Водрузи её на постамент — тир попадёт в летопись.")
+				.withStyle(ChatFormatting.GOLD), false);
+		return 1;
+	}
+
 	private static int scroll(CommandSourceStack source) throws CommandSyntaxException {
 		ServerPlayer player = source.getPlayerOrException();
 		player.getInventory().placeItemBackInInventory(new ItemStack(PantheonContent.NAME_SCROLL), Prediction.SERVER_ONLY);
@@ -270,7 +288,7 @@ public final class PantheonCommands {
 			AuraTier tier = AuraService.tierOf(player);
 			int count = AuraService.countNear(source.getLevel(), data, player);
 
-			source.sendSuccess(() -> Component.literal("Рядом фигурок: " + count
+			source.sendSuccess(() -> Component.literal("Очков ауры рядом: " + count
 					+ (tier == null ? " · аура спит" : " · ступень: " + tier.title()
 							+ " (" + tier.effect().value().getDisplayName().getString() + ")")).withStyle(ChatFormatting.GRAY), false);
 		}

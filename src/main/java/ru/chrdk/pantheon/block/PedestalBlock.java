@@ -21,7 +21,8 @@ public class PedestalBlock extends AtticShrineBlock {
 
 	@Override
 	protected Component emptyHint() {
-		return Component.literal("Постамент пуст. Возьми именную печать (переименуй пустую в наковальне) и щёлкни по нему.");
+		return Component.literal("Постамент пуст. Водрузи именную печать или фигурку подписчика — "
+				+ "фигурку отливают в верстаке из печати, свечи, золота и бумаги.");
 	}
 
 	@Override
@@ -31,6 +32,6 @@ public class PedestalBlock extends AtticShrineBlock {
 
 	@Override
 	protected Component onReleased(String nick) {
-		return Component.literal("Фигурка " + nick + " снята с постамента, печать вернулась в руки.");
+		return Component.literal("Фигурка " + nick + " снята с постамента и вернулась в руки.");
 	}
 }

@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		"minecraft:stick",
+		"minecraft:iron_ingot"
+	],
+	"result": {
+		"id": "chrdk_pantheon:attic_chisel",
+		"count": 1
+	}
+}

@@ -1,1 +1,4 @@
-{"type":"minecraft:crafting_shaped","pattern":[" C ","GSG"," P "],"key":{"C":{"item":"minecraft:candle"},"G":{"item":"minecraft:gold_ingot"},"S":{"item":"chrdk_pantheon:blank_seal"},"P":{"item":"minecraft:paper"}},"result":{"id":"chrdk_pantheon:subscriber_figurine","count":1}}
+{
+	"type": "chrdk_pantheon:crafting_figurine_cast",
+	"category": "misc"
+}

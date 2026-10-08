@@ -12,5 +12,8 @@
 	"block.chrdk_pantheon.attic_web": "Attic Cobweb",
 	"block.chrdk_pantheon.attic_glass": "Attic Stained Glass",
 	"container.chrdk_pantheon.subscriber_chest": "Subscriber Chest",
-	"item.chrdk_pantheon.subscriber_figurine": "Subscriber Figurine"
+	"item.chrdk_pantheon.subscriber_figurine": "Subscriber Figurine",
+	"item.chrdk_pantheon.subscriber_figurine.tier": "Tier %s",
+	"item.chrdk_pantheon.subscriber_figurine.unnamed": "Nameless — cast one from a named seal at a crafting table",
+	"item.chrdk_pantheon.attic_chisel": "Attic Chisel"
 }
